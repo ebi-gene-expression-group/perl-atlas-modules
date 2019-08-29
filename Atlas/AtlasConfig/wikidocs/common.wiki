@@ -1,0 +1,37 @@
+﻿
+== NAME ==
+
+Atlas::AtlasConfig::Common - functions shared by multiple classes in Atlas::AtlasConfig
+
+
+== SYNOPSIS ==
+
+
+{{{
+        use Atlas::AtlasConfig::Common qw(
+                get_all_factor_types
+                print_stdout_header_footer
+                get_numeric_timepoint_value
+        );
+
+        # ...
+        
+        my $allFactorTypes = get_all_factor_types($assayGroupOne, $assayGroupTwo);
+}}}
+
+== DESCRIPTION ==
+
+This module exports functions that are used by multiple classes creating Expression Atlas XML config.
+
+
+== METHODS ==
+
+ get_all_factor_types:: This function takes an array of Atlas::AtlasConfig::AssayGroup objects and finds all the factor types they have, even non-shared ones.
+ print_stdout_header_footer:: This function takes a string and passes it to the logger, padded with dashes. It's used by Atlas::AtlasConfig classes to mark the starts and ends of the AssayGroup and Contrast creation sections of the STDOUT.
+ get_numeric_timepoint_value:: Given a string e.g. "2.5 hour" will pull out the numeric value and return it. Dies if what it pulls out was not numeric.
+
+
+== AUTHOR ==
+
+Expression Atlas team <arrayexpress-atlas@ebi.ac.uk>
+

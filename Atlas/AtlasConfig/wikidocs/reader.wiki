@@ -1,0 +1,35 @@
+﻿
+== NAME ==
+
+Atlas::AtlasConfig::Reader - reads an Atlas XML config file in to Atlas::AtlasConfig objects.
+
+
+== SYNOPSIS ==
+
+use Atlas::AtlasConfig::Reader qw( parseAtlasConfig );
+
+my $configXMLfilename = "E-MTAB-1066-configuration.xml";
+
+my $experimentConfig = parseAtlasConfig( $configXMLfilename );
+
+
+== DESCRIPTION ==
+
+This module will read an Atlas XML config file and create the relevant Atlas::AtlasConfig object e.g. AssayGroups, Contrasts, etc.
+
+
+== METHODS ==
+
+ parseAtlasConfig:: This function takes an Atlas XML config file and returns an Atlas::AtlasConfig::ExperimentConfig object representing it.
+ _make_all_analytics:: Not exported. Takes arrayref of analytics elements from XML and XML experiment type. Returns arrayref of Atlas::AtlasConfig::Analytics (or Atlas::AtlasConfig::Analytics::Differential) objects.
+ _make_analytics_assay_groups:: Not exported. Takes arrayref of assay_group elements from XML and XML experiment type. Returns arrayred of Atlas::AtlasConfig::AssayGroup objects.
+ _make_assay_group_assays:: Not exported. Takes arrayref of assay elements from XML and XML assay group label. Returns arrayref of Assay objects.
+ _map_technical_replicates_to_assay_names:: Not exported. Takes an arrayref of assay elements from XML. Returns a hashref with technical replicate IDs (or "no_technical_replicate_id") as keys and arrayrefs of corresponding assay names as values.
+ _make_analytics_contrasts:: Not exported. Takes arrayref of contrast elements from XML and arrayref of Atlas::AtlasConfig::AssayGroup objects. Returns arrayref of Atlas::AtlasConfig::Contrast objects.
+ _map_assay_group_ids_to_assay_groups:: Not exported. Takes arrayref of Atlas::AtlasConfig::AssayGroup objects. Returns a hash mapping assay group IDs to Atlas::AtlasConfig::AssayGroup objects.
+
+
+== AUTHOR ==
+
+Expression Atlas team <arrayexpress-atlas@ebi.ac.uk>
+

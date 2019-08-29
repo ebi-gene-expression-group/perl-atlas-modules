@@ -1,0 +1,74 @@
+---
+
+# See 'perldoc ArrayExpress::Curator::Config' for a full description
+# of these configuration options.
+
+# MIAMExpress connection settings.
+MX_DSN: ''
+MX_PASSWORD: ''
+MX_USERNAME: ''
+MX_EXTENDED_REPORT: 1
+
+# ArrayExpress database connection settings.
+AE_DSN: ''
+AE_PASSWORD: ''
+AE_USERNAME: ''
+
+# ArrayExpress warehouse connection settings.
+AEDW_DSN: ''
+AEDW_PASSWORD: ''
+AEDW_USERNAME: ''
+AEDW_DESIGN_TYPES:
+    - co-expression_design
+AEDW_UNWANTED_DESIGN_TYPES:
+    - comparative_genome_hybridization_design
+    - binding_site_identification_design
+    - genotyping_design
+    - tiling_path_design
+    - platform_comparison_design
+    - array_platform_variation_design
+    - hardware_variation_design
+    - software_variation_design
+    - operator_variation_design
+    - quality_control_testing_design
+    - optimization_design
+    - normalization_testing_design
+    - self_vs_self_design
+AEDW_MINIMUM_HYBS: 6
+
+# A list of array pipelines assumed to be MIAME compliant.
+MIAME_COMPLIANT_ARRAY_PIPELINES:
+    - A-AFFY-
+    - A-AGIL-
+    - A-BUGS-
+    - A-WMIT-
+    - A-GEHB-
+
+HTTP_PROXY: ''
+
+# ArrayExpress repository webpages.
+AE_ARRAYDESIGN_LIST: http://www.ebi.ac.uk/microarray-as/aer/report?cmd=arraydesignlist
+
+# Autosubmission system settings.
+AUTOSUBS_ADMIN: ''
+AUTOSUBS_ADMIN_USERNAME: ''
+AUTOSUBS_DOMAIN: ebi.ac.uk
+
+AUTOSUBS_DSN: ''
+AUTOSUBS_USERNAME: ''
+AUTOSUBS_PASSWORD: ''
+
+AUTOSUBMISSIONS_FILEBASE: ''
+AUTOSUBMISSIONS_TARGET: ''
+
+# Download size constraints. Note that $MAX_LWP_DOWNLOAD needs to be
+# at least as big as the downloaded arraydesignlist, otherwise the
+# script won't be able to find all the array design database ids.
+MAX_LWP_DOWNLOAD:  62914560
+
+# Settings for protocol accession reassignment.
+T2M_EXPERIMENT_PREFIX: 'E-[A-Z]{4}-'
+T2M_PROTOCOL_PREFIX: P-TABM-
+
+# The font used in GraphViz graph PNG generation.
+VISUALIZE_FONT: Courier

@@ -1,0 +1,34 @@
+
+== NAME ==
+
+gxa_generateConfigurationForExperiment.pl - create an XML config file for an Expression Atlas experiment.
+
+
+== SYNOPSIS ==
+
+gxa_generateConfigurationForExperiment.pl -e E-MTAB-1066 -t differential
+
+gxa_generateConfigurationForExperiment.pl -e E-MTAB-513 -t baseline -l paired
+
+
+== DESCRIPTION ==
+
+This script takes an ArrayExpress experiment accession and an analysis type (baseline or differential), and creates an XML config file for Expression Atlas.
+
+
+== OPTIONS ==
+
+ -e --experiment:: Requred. ArrayExpress accession of experiment.
+ -t --type:: Required. Type of analysis. Must be one of "baseline" or "differential".
+ -l --library:: Optional. Specify the type of RNA-seq libraries to retrieve from MAGE-TAB. Must be one of "paired" or "single".
+ -r --reference:: Optional. Differential experiments only. Specify a value to use as the reference factor value in contrasts. Put multi-word terms in quotes.
+ -i --ignore:: Optional. Specify a factor type to ignore when creating assay groups.
+ -o --outdir:: Optional. Specify a directory to write the XML configuration file. Default is current working directory.
+ -d --debug:: Optional. Log debugging messages.
+ -h --help:: Print a helpful message.
+
+
+== AUTHOR ==
+
+Expression Atlas team <arrayexpress-atlas@ebi.ac.uk>
+

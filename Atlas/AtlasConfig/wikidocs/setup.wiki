@@ -1,0 +1,39 @@
+﻿
+== NAME ==
+
+Atlas::AtlasConfig::Setup - set up for Atlas XML config file generation.
+
+
+== SYNOPSIS ==
+
+
+{{{
+        use Atlas::AtlasConfig::Setup qw(
+                create_factor_configs
+                create_magetab4atlas
+                create_atlas_experiment_type
+        );
+
+        # ...
+        
+        # Read file containing known reference factor values and factor types to ignore.
+        my ($referenceFactorValues, $ignoreFactorTypes) = create_factor_configs($referencesIgnoreFile);
+}}}
+
+== DESCRIPTION ==
+
+This module contains functions to set up some variables needed prior to creation of Atlas::AtlasConfig XML components. It creates a Magetab4Atlas object containing only the desired assays, and decides the experiment type string to be placed at the top of the XML config file.
+
+
+== METHODS ==
+
+ create_factor_configs:: Reads in an XML file containing factor values that are known references for contrasts, and factor types that should be ignored when creating contrasts, and returns two hashes mapping each value to 1.
+ create_magetab4atlas:: Takes a hash of command arguments from Atlas XML config generation script and returns a Magetab4Atlas object containing the appropriate assays, e.g. only paired- or single-end sequencing runs if the "-l" option was passed to the script. Will die if baseline type or a library layout was passed for a microarray experiment.
+ create_atlas_experiment_type:: Takes a Magetab4Atlas object and an analysis type ("baseline" or "differential"), returns the Atlas experiment type to be written to the XML config file.
+ _rna_type_for_array:: Not exported. Takes an array of Assay objects and checks if their array designs are miRNA or mRNA, based on presence/absence of miRBase mapping file.
+
+
+== AUTHOR ==
+
+Expression Atlas team <arrayexpress-atlas@ebi.ac.uk>
+

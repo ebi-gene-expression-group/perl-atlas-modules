@@ -1,0 +1,52 @@
+﻿
+== NAME ==
+
+Atlas::AtlasConfig::AssayGroup - a set of Assay objects that are biological [or technical] replicates.
+
+
+== SYNOPSIS ==
+
+
+{{{
+        use Atlas::AtlasConfig::AssayGroup;
+
+        # ...
+        my $assayGroup = Atlas::AtlasConfig::AssayGroup->new(
+                assays => $arrayRefOfAssay4atlasObjectsWithSameFactorValues,
+                minimum_biological_replicates => $minimumNumberOfBiologicalReplicates,
+                assay_group_id => $assayGroupID,
+        );
+}}}
+
+== DESCRIPTION ==
+
+An Atlas::AtlasConfig::AssayGroup object contains an array of Assay objects that have been determined to be biological or technical replicates. Each Atlas::AtlasConfig::AssayGroup object stores an assay group ID (string, e.g. "g1"), which is unique to that assay group within an Atlas::AtlasConfig::Analytics object. Each Atlas::AtlasConfig::AssayGroup object also stores a reference to a hash of factor types and their corresponding values that are shared by all the Assay objects in this assay group. The Atlas::AtlasConfig::AssayGroup object also stores a label, which is a string containing the factor value(s) shared by assays in this assay group.
+
+
+== ATTRIBUTES ==
+
+ assay_group_id:: This is the unique identifier for the assay group within the Atlas::AtlasConfig::Analytics object that contains it. Practically, it will be printed in the XML config file in three places: 1) the id attribute for the assay_group element, 2) the contrast ID of any contrasts that use it, and 3) in the test_assay_group or reference_assay_group element of any contrasts that use it, as appropriate.
+ biological_replicates:: An reference to array of Atlas::AtlasConfig::BiologicalReplicate objects.
+ factors:: A reference to a hash containing factor type-factor value pairs shared by all assays belonging to this assay group.
+ label:: Assay group label. This is a string containing the factor value(s) shared by all assays belonging to this assay group. In multi-factor experiments, the factor values are separated by "; ", e.g. "wild type; none; 0 day".
+ assays:: A reference to an array of Assay objects, that have been determined to be biological (or tecnical) replicates of each other based on their shared factor values.
+ minimum_biological_replicates:: Integer value specifying minimum number of Atlas::AtlasConfig::BiologicalReplicate objects to allow in an AssayGroup.
+ in_contrast:: Flag that is set when an AssayGroup is added to a Contrast in an Analytics::Differential object. Used in printing XML. If an AssayGroup is not in any Contrasts it will be flagged in the STDOUT and with a comment in the XML file.
+
+
+== METHODS ==
+
+Each attribute has accessor (get_*) and mutator (set_*) methods.
+
+ new:: Instantiates a new Atlas::AtlasConfig::AssayGroup oject. This should be called by Atlas::AtlasConfig::Analytics rather than directly.
+ _build_factors:: Returns a hash of factors taken from the first BiologicalReplicate in the array built.
+ _build_label:: Returns a string with factor values joined by "; ".
+ _build_biological_replicates:: Returns an array of Atlas::AtlasConfig::BiologicalReplicate objects. Each one contains an arrayref of Assay objects that belong to the same technical replicate group. Assays that do not belong to a technical replicate group occupy their own BiologicalReplicate object solo.
+ _map_technical_replicate_ids_to_assays:: Returns a hash with technical replicate IDs as keys and arrayrefs of assay groups belonging to each technical replicate group as the values. If an assay does not belong to a technical replicate group, it is placed under key "no_technical_replicate_id".
+ _build_in_contrast:: Returns default value to flag whether this AssayGroup belongs to an Atlas::AtlasConfig::Contrast. On creation, this is always 0.
+
+
+== AUTHOR ==
+
+Expression Atlas team <arrayexpress-atlas@ebi.ac.uk>
+

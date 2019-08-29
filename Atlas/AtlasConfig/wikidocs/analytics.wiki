@@ -1,0 +1,48 @@
+﻿
+== NAME ==
+
+Atlas::AtlasConfig::Analytics - contains assay groups needed for Atlas analytics
+
+
+== SYNOPSIS ==
+
+
+{{{
+        use Atlas::AtlasConfig::Analytics;
+
+        # ...
+        
+        my $atlasAnalytics = Atlas::AtlasConfig::Analytics->new(
+                platform => $platform,  # "rnaseq" or ArrayExpress array design accession
+                assays => $arrayRefOfAssayObjects,
+        );
+}}}
+
+== DESCRIPTION ==
+
+An Atlas::AtlasConfig::Analytics object stores an array of Atlas::AtlasConfig::AssayGroup objects that are used in one Atlas analytics element of an Atlas experiment.
+
+
+== ATTRIBUTES ==
+
+ atlas_assay_groups:: Reference to array containing Atlas::AtlasConfig::AssayGroup objects.
+ platform:: String representing the platform for this analytics element. Either "rnaseq" or an ArrayExpress array design accession/
+ assays:: Reference to an array of Assay objects.
+ minimum_biological_replicates:: Integer specifying the minimum number of biological replicates allowed in an AssayGroup.
+
+
+== METHODS ==
+
+Each attribute has accessor (get_*) and mutator (set_*) methods.
+
+ new:: Instantiates a new Atlas::AtlasConfig::Analytics object.
+ _build_minimum_biological_replicates:: Returns the minimum number of biological replicates required in a Baseline Atlas experiment (currently 1). This is overridden by the same builder method in Atlas::AtlasConfig::Analytics::Differential.
+ _build_atlas_assay_groups:: Returns an array of Atlas::AtlasConfig::AssayGroup objects.
+ _map_factors_to_assays:: Creates a hash with factor values as keys and arrayrefs of assays as values.
+ _factor_values_to_string:: Returns a string of factor values joined with "; ".
+
+
+== AUTHOR ==
+
+Expression Atlas team <arrayexpress-atlas@ebi.ac.uk>
+

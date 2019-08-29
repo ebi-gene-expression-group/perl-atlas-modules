@@ -1,0 +1,35 @@
+﻿
+== NAME ==
+
+Atlas::AtlasConfig::ExperimentConfigFactory - functions to create an Atlas::AtlasConfig::ExperimentConfig object.
+
+
+== SYNOPSIS ==
+
+
+{{{
+        use Atlas::AtlasConfig::ExperimentConfigFactory qw( create_experiment_config );
+
+        # ...
+        my $experimentConfig = create_experiment_config(
+                $Magetab4AtlasObject,           # contains Atlas-relevant data from MAGE-TAB
+                $atlasXMLExperimentType,        # e.g. microarray_1colour_mrna_differential
+                $experimentAccession,
+                $referenceFactorValuesHash,
+        );
+}}}
+
+== DESCRIPTION ==
+
+This module exports functions to create the Atlas XML config, as a Moose object.
+
+
+== METHODS ==
+
+ create_experiment_config:: Takes a Magetab4Atlas object and an Atlas experiment type, and returns an Atlas::AtlasConfig::ExperimentConfig object with the appropriate Atlas::AtlasConfig::Analytics objects inside, ready for writing to XML.
+
+
+== AUTHOR ==
+
+Expression Atlas team <arrayexpress-atlas@ebi.ac.uk>
+

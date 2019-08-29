@@ -1,0 +1,45 @@
+﻿
+== NAME ==
+
+Atlas::AtlasConfig::ExperimentConfig - contains Atlas analytics objects for experiment XML config.
+
+
+== SYNOPSIS ==
+
+
+{{{
+        use Atlas::AtlasConfig::ExperimentConfig;
+
+                # ...
+
+                my $experimentConfig = Atlas::AtlasConfig::ExperimentConfig->new(
+                        atlas_analytics => $arrayRefOfAtlasAnalyticsObjects,
+                        atlas_experiment_type => $atlasXmlExperimentType,
+                        experiment_accession => $experimentAccession,
+                );
+}}}
+
+== DESCRIPTION ==
+
+An Atlas::AtlasConfig::ExperimentConfig object stores an array of Atlas::AtlasConfig::Analytics objects to be written to the final experiment XML config. For RNA-seq experiments, there should be only one Analytics object. For microarray, there should be one Analytics object per array design.
+
+
+== ATTRIBUTES ==
+
+ atlas_analytics:: An array containing one or more Atlas::AtlasConfig::Analytics objects to print to the XML config file.
+ atlas_experiment_type:: A string containing the Atlas experiment type. One of: 'microarray_1colour_mrna_differential', 'microarray_2colour_mrna_differential', 'microarray_1colour_microrna_differential', 'rnaseq_mrna_differential', 'rnaseq_mrna_baseline'.
+ experiment_accession:: ArrayExpress accession of experiment, e.g. E-MTAB-1066.
+
+
+== METHODS ==
+
+Each attribute has accessor (get_*), mutator (set_*), and predicate (has_*) methods.
+
+ new:: Instantiates a new Atlas::AtlasConfig::ExperimentConfig object.
+ write_xml:: Writes the Atlas::AtlasConfig::ExperimentConfig and all it contains in XML format.
+
+
+== AUTHOR ==
+
+Expression Atlas team <arrayexpress-atlas@ebi.ac.uk>
+

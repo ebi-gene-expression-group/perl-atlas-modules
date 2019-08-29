@@ -1,0 +1,48 @@
+﻿
+== NAME ==
+
+Atlas::AtlasConfig::Contrast - contains assay groups required for a contrast, a contrast ID and a contrast name.
+
+
+== SYNOPSIS ==
+
+
+{{{
+        use Atlas::AtlasConfig::Contrast;
+
+                # ...
+                my $contrast = Atlas::AtlasConfig::Contrast->new(
+                        reference_assay_group => $testAssayGroupObject,
+                        test_assay_group => $referenceAssayGroupObject,
+                );
+}}}
+
+== DESCRIPTION ==
+
+An Atlas::AtlasConfig::Contrast object stores a reference and a test assay group, a contrast name and a contrast ID in the format "g1_g2".
+
+
+== ATTRIBUTES ==
+
+ test_assay_group:: Atlas::AtlasConfig::AssayGroup to be used as the test group in the contrast.
+ reference_assay_group:: Atlas::AtlasConfig::AssayGroup to be used as the reference group in the contrast.
+ contrast_name:: The human-readable name of the contrast, e.g. "mutant vs. wild type".
+ contrast_id:: The contrast ID, which is in the format <reference_assay_group_id>_<test_assay_group_id>.
+
+
+== METHODS ==
+
+Each attribute has accessor (get_*) and mutator (set_*) methods.
+
+ new:: Instantiates a new Atlas::AtlasConfig::Contrast object.
+ _build_contrast_id:: Creates a contrast ID out of the assay group IDs and returns it.
+ _build_contrast_name:: Creates contrast name and returns it. Uses the varying (non-shared) factor values for the first part of the name e.g. "salt vs none". Then uses the shared factor values for the second part e.g. "in wild type". Adds "at" for time values.
+ _get_varying_and_shared_factors:: Takes a test and reference AssayGroup object, figures out which factor values are shared between then and which are not, and returns three hashes: one of non-shared test factors, one of non-shared reference factors, and one of the shared factors.
+ _make_contrast_name_beginning:: Makes two sentences from the non-shared test and reference factor values, joins them with " vs ".
+ _factor_values_to_sentence:: Takes a hash mapping factors to factor values, and creates a sentence out of them such as: "'wild type; none' at '2 hour'".
+
+
+== AUTHOR ==
+
+Expression Atlas team <arrayexpress-atlas@ebi.ac.uk>
+

@@ -1,0 +1,58 @@
+﻿
+== NAME ==
+
+Atlas::AtlasConfig::Analytics::Differential - contains assay groups needed for Atlas analytics, as well as contrasts.
+
+
+== SYNOPSIS ==
+
+
+{{{
+        use Atlas::AtlasConfig::Analytics::Differential;
+
+                # ...
+                
+                my $atlasAnalytics = Atlas::AtlasConfig::Analytics::Differential->new(
+                        platform => $platform,  # "rnaseq" or ArrayExpress array design accession
+                        assays => $arrayRefOfAssayObjects,
+                        reference_factor_values => $referenceFactorValuesHash,
+                );
+}}}
+
+== DESCRIPTION ==
+
+An Atlas::AtlasConfig::Analytics::Differential object stores an array of Atlas::AtlasConfig::AssayGroup objects that are used in one Atlas analytics element of an Atlas experiment. It also stores the Contrast(s) containing AssayGroup objects found in the array of AssayGroups. Building an object of this class checks that each AssayGroup passed has at least three BiologicalReplicate objects in its biological_replicates array.
+
+
+== ATTRIBUTES ==
+
+Inherited from Atlas::AtlasConfig::Analytics: atlas_assay_groups
+
+ atlas_contrasts:: An array of Atlas::AtlasConfig::Contrast objects.
+ reference_factor_values:: Hashref mapping known reference factor values to 1.
+
+
+== METHODS ==
+
+Each attribute has accessor (get_*) and mutator (set_*) methods.
+
+ new:: Instantiates a new Atlas::AtlasConfig::Analytics::Differential object. Checks that all AssayGroups passed have at least the minimum allowed BiologicalReplicates, dies if not.
+ _build_minimum_biological_replicates:: Returns the minimum allowed number of BiologicalReplicates in a differential experiment. Currently this is 3.
+ _build_atlas_contrasts:: Attempts to create contrasts using supplied AssayGroup objects. If there's a "time" factor, calls _decide_time_series_contrasts. If not, calls _decide_contrasts.
+ _decide_contrasts:: Decides contrasts between a set of AssayGroups. First checks for presence of a possible reference value. If none is found in this set, it returns nothing. Then it goes through each pair of AssayGroups and decides if a contrast can be made between them. This is done by first checking if the pair only differs by exactly one factor value. If so, then it checks if, for this varying factor, one of the assay groups has a reference value and the other does not. If this condition is met, it creates a new Atlas::AtlasConfig::Contrast with them. It creates an ArrayRef of all the Contrasts it makes and returns this. It has an optional argument, $ignoreTime, which can be set to true if required. Doing this will mean that the function will ignore any "time" factor when counting the number of differences between assay group factor values.
+ _decide_time_series_contrasts:: Decides contrasts for experiments with "time" as a factor. First it sorts out all assay groups by time point, in a hash. Those that do not have a time value specified are grouped together. It does not allow different time units to be used -- all time points must have the same units. It also does not allow negative time points. If "time" is the only factor, it finds the AssayGroup with the earliest time point and calls _decide_contrasts_against_reference_assay_group to create new Atlas::AtlasConfig::Contrast objects using this as the reference and each other AssayGroup as a test group. It then returns these contrasts in an ArrayRef. If "time" is not the only factor, it counts the number of assay groups at each time point. If there is only one assay group at each time point, then it calls _decide_contrasts with all the assay groups, passing $ignoreTime=1. If some time points have more than one assay group, then it looks at each time point in turn. If the time point has more than one assay group, it decides contrasts between them by calling _decide_contrasts. If the time point has only one assay group, and it looks like a reference time point (calls _looks_like_reference_timepoint), then it decides contrasts between this and all other assay groups by calling _decide_contrasts_against_reference_assay_group and passing $ignoreTime=1. It returns an ArrayRef containing all the contrasts it created.
+ _possible_reference_present:: Takes an ArrayRef of Atlas::AtlasConfig::AssayGroup objects and a hash with known reference factor values as keys. It looks at all the factor values in the assay groups provided and returns a value greater than 0 if any are known references.
+ _one_factor_differs:: Takes a pair of AssayGroup objects and returns 1 if there is only one difference between their factor values. Takes an optional argument $ignoreTime, which if true means it will ignore any "time" factor when counting differences.
+ _get_varying_factor_values_for_pair:: Takes two AssayGroup objects and returns the values of the factor that varies. Takes an optional argument $ignoreTime, which if true means that it will ignore any "time" factor when finding the varying factor.
+ _map_time_points_to_assay_groups:: Takes a hash of factor types and an array of assay groups that have "time" as a factor. Returns a hash with the time points as keys and arrayrefs of assay groups as values.
+ _looks_like_reference_timepoint:: Takes a time point, the assay group at that time point, all assay groups mapped to time points, and the reference factor values. Returns true if the assay group is the earliest time point over all, and all its other factor values are known reference values.
+ _is_earliest_time_point:: Takes a time point and a hash of assay groups mapped to time points, and checks if the time point passed is the earliest of all of them. Returns 1 if so, 0 if not.
+ _decide_contrasts_against_reference_assay_group:: Takes an assay group to use as a reference, an array of assay groups and a hash of known reference values. Tries to decide contrasts between the desired reference assay group and the assay groups in the array. Returns an ArrayRef of the contrasts it makes. Takes an optional argument $ignoreTime which if true means that any "time" factors are ignored when counting differences.
+ _different_time_units:: Tests whether time points have the same time units or different ones. Returns 1 if different, 0 if the same.
+ _negative_time_point:: Checks if any time points have negative values. Returns 1 if so, 0 if not.
+
+
+== AUTHOR ==
+
+Expression Atlas team <arrayexpress-atlas@ebi.ac.uk>
+
