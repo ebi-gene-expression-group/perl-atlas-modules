@@ -44,12 +44,13 @@ use XML::Simple qw( :strict );
 use IPC::Cmd qw( can_run );
 
 use EBI::FGPT::Config qw( $CONFIG );
-use EBI::FGPT::Resource::Database::GXA;
+use EBI::FGPT::Resource::Database::pgGXA;
+
 # TODO: rpetry - a hack to prevent using Postgres module on anything other than RH7 (plantain VM runs RH6 and doesn't seem to have Postgres installed)
-my $rhVersion = `cat /etc/redhat-release | awk '{print \$7}' | awk -F'.' '{print \$1}'`;
-if ( "$rhVersion" == "7" ) {
-  eval "use EBI::FGPT::Resource::Database::pgGXA;"; die $@ if $@;
-}
+#my $rhVersion = `cat /etc/redhat-release | awk '{print \$7}' | awk -F'.' '{print \$1}'`;
+#if ( "$rhVersion" == "7" ) {
+#  eval "use EBI::FGPT::Resource::Database::pgGXA;"; die $@ if $@;
+#}
 use Atlas::AtlasContrastDetails;
 use Atlas::Magetab4Atlas;
 
