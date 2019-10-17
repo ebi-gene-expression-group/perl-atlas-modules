@@ -18,6 +18,7 @@ use Tie::IxHash;
 use Readonly;
 use File::Spec;
 use File::Basename;
+use Carp;
 
 use base 'Exporter';
 our @EXPORT_OK = qw($CONFIG);
