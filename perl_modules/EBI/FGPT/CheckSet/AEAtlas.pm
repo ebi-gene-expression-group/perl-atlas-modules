@@ -118,7 +118,7 @@ use Moose;
 use MooseX::FollowPBP;
 use Scalar::Util qw( looks_like_number );
 use EBI::FGPT::Config qw($CONFIG);
-use EBI::FGPT::Resource::Database::GXA;
+#use EBI::FGPT::Resource::Database::GXA;
 use URL::Encode qw( url_encode_utf8 );
 use XML::Simple qw( :strict );
 
