@@ -1,0 +1,20 @@
+---
+no_qc_info:
+    - E-MTAB-2706
+    - E-MTAB-2919
+    - E-MTAB-2770
+    - E-MTAB-3983
+    - E-MTAB-3358
+    - E-MTAB-3578
+    - E-MTAB-3579
+    - E-MTAB-3819
+    - E-MTAB-3827
+    - E-MTAB-4754
+    - E-MTAB-5200
+    - E-MTAB-5214
+    - E-MTAB-4748
+
+no_raw_counts:
+    - E-MTAB-3358
+    - E-MTAB-3578
+    - E-MTAB-3579

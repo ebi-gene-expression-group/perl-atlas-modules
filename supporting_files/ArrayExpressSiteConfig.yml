@@ -1,0 +1,3 @@
+AE_PG_DSN:                dbi:Pg:dbname=gxpatlaspro;host=pgsql-hxvm-002.ebi.ac.uk;port=5432
+AE_PG_USERNAME:           atlasprd3
+AE_PG_PASSWORD:           xxxxxx

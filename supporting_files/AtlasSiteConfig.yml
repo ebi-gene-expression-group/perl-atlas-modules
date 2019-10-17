@@ -1,0 +1,4 @@
+# This file contains config for variables used by Expression Atlas code.
+
+# Test or prod?
+atlasinstall:   prod
