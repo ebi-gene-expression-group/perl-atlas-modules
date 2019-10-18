@@ -1,0 +1,15 @@
+organism part	drosophila_melanogaster	FBbt
+cell line	homo_sapiens	CLO,EFO
+cell line	drosophila_melanogaster 	CLO,EFO
+cell type	drosophila_melanogaster	FBbt
+organism part	plants	PO,EFO
+environmental stress	plants	PO,EFO
+organism part	other	UBERON,EFO
+other	any	EFO
+disease	homo_sapiens	DOID,EFO
+developmental stage	danio_rerio	ZFS,EFO
+ogranism part	danio_rerio	ZFA,EFO
+strain	rattus_norvegicus	RS
+compound	any	ChEBI,EFO
+infect	any	taxon
+organism	any	NCBITAXON,EFO

@@ -39,7 +39,7 @@ use File::Basename;
 use Atlas::ExptFinder::ArrayExpressAPI;
 use Atlas::Common qw( create_atlas_site_config );
 
-use EBI::FGPT::Resource::Database;
+#use EBI::FGPT::Resource::Database;
 #use EBI::FGPT::Resource::Database::GXA;
 
 

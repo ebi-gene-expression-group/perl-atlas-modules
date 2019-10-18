@@ -1,0 +1,214 @@
+---
+# Atlas eligible experiment types.
+atlas_experiment_types:
+    - transcription profiling by array
+    - microRNA profiling by array
+    - RNA-seq of coding RNA
+    - RNA-seq of coding RNA from single cells
+
+# Atlas eligible property types.
+atlas_property_types:
+    - disease
+    - mitotic rate
+    - last follow up
+    - Weiss grade
+    - tumor mass
+    - biotic plant treatment
+    - breed
+    - gestational age
+    - single cell well quality
+    - biopsy site
+    - tumor stage
+    - stimulus
+    - age
+    - Breslow thickness
+    - compound
+    - Clark level
+    - dose
+    - ecotype
+    - ethnic group
+    - fraction
+    - generation
+    - RNA
+    - histology
+    - individual
+    - infect
+    - injury
+    - irradiate
+    - light
+    - physical activity
+    - organism
+    - performer
+    - phenotype
+    - ploidy
+    - population
+    - replicate
+    - sex
+    - temperature
+    - time
+    - block
+    - genotype
+    - treatment
+    - diet
+    - strain
+    - specimen with known storage state
+    - germplasm
+    - initial time point
+    - height
+    - body mass index
+    - mass
+    - BMI
+    - growth condition
+    - xenograft
+    - somatic genotype
+    - germline genotype
+    - passage
+    - immunoprecipitate
+    - A1C measurement
+    - biosource provider
+    - biosource type
+    - adhesion molecule measurement
+    - cancer site
+    - cell line
+    - cell type
+    - cellular component
+    - chromosomal aberration
+    - clinical history
+    - clinical information
+    - clinical treatment
+    - developmental stage
+    - disease staging
+    - environmental history
+    - environmental stress
+    - estrogen receptor status
+    - family history
+    - family relationship
+    - genetic modification
+    - material type
+    - organism part
+    - organism status
+    - progesterone receptor status
+    - sampling site
+    - sampling time point
+    - survival time
+    - test result
+    - tumor grading
+    - tumor size
+    - adiponectin measurement
+    - angiotensin converting enzyme activity measurement
+    - apolipoprotein A 1 measurement
+    - bilirubin measurement
+    - blood sedimentation
+    - blood viscosity
+    - chemerin measurement
+    - coagulation factor measurement
+    - cortisol secretion measurement
+    - C-reactive protein measurement
+    - creatine kinase measurement
+    - cystatin C measurement
+    - D dimer measurement
+    - fasting blood glucose measurement
+    - fasting blood insulin measurement
+    - ferritin measurement
+    - fetal hemoglobin measurement
+    - fibrinogen measurement
+    - haptoglobin measurement
+    - hematocrit
+    - hemoglobin measurement
+    - high density lipoprotein cholesterol measurement
+    - HOMA-B
+    - HOMA-IR
+    - homocysteine measurement
+    - HPV seropositivity
+    - insulin like growth factor measurement
+    - insulin sensitivity measurement
+    - interleukin 18 measurement
+    - leukocyte count
+    - liver enzyme measurement
+    - low density lipoprotein cholesterol measurement
+    - mean corpuscular hemoglobin
+    - mean platelet volume
+    - partial thromboplastin time
+    - platelet count
+    - progranulin measurement
+    - prostate specific antigen measurement
+    - serum albumin measurement
+    - serum creatinine
+    - serum hepcidin measurement
+    - serum IgE measurement
+    - serum IgG measurement
+    - serum non-albumin protein measurement
+    - soluble transferrin receptor measurement
+    - thyroid stimulating hormone measurement
+    - total blood protein measurement
+    - total cholesterol measurement
+    - triglyceride measurement
+    - vitamin K measurement
+    - von Willebrand factor measurement
+    - age at diagnosis
+    - metastasis free survival
+    - progression free survival
+    - alive at endpoint
+    - disease recurrence
+    - lymph node stage
+    - date of diagnosis
+    - date of birth
+    - response to treatment
+    - cohort
+    - karyotype
+    - RNA interference
+    - cultivar
+    - protocol
+    - cell cycle stage
+    - tissue supergroup
+    - progenitor cell type
+    - host organism
+
+# ArrayExpress eligible experiment types.
+arrayexpress_experiment_types:
+    - Ribo-seq
+    - ATAC-seq
+    - GRO-seq
+    - Hi-C
+    - Capture-C
+    - 4C
+    - MNase-seq
+    - RIP-chip by array
+    - CLIP-seq
+    - FAIRE-seq
+    - RIP-seq
+    - Bisulfite-seq
+    - MBD-seq
+    - MeDIP-seq
+    - MRE-seq
+    - transcription profiling by MPSS
+    - transcription profiling by RT-PCR
+    - transcription profiling by SAGE
+    - translation profiling
+    - proteomic profiling by array
+    - transcription profiling by array
+    - ChIP-chip by SNP array
+    - methylation profiling by array
+    - tiling path by array
+    - comparative genomic hybridization by array
+    - transcription profiling by tiling array
+    - DNA-seq
+    - RNA-seq of total RNA
+    - RNA-seq of non coding RNA
+    - microRNA profiling by array
+    - genotyping by array
+    - ChIP-chip by tiling array
+    - proteomic profiling by mass spectrometer
+    - RNAi profiling by array
+    - genotyping by high throughput sequencing
+    - antigen profiling
+    - RNA-seq of coding RNA
+    - ChIP-seq
+    - methylation profiling by high throughput sequencing
+    - ChIP-chip by array
+    - metabolomic profiling
+    - RNAi profiling by high throughput sequencing
+    - RNA-seq of coding RNA from single cells
+    - RNA-seq of non coding RNA from single cells
+    - microRNA profiling by high throughput sequencing
+    - whole chromosome random sequencing
