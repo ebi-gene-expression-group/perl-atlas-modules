@@ -203,5 +203,5 @@ failed_curation_dir: /nfs/production3/ma/home/atlas3-production/failedCuration
 non_standard_experiments_file: sw/atlasinstall_prod/atlasprod/supporting_files/non_standard_experiments.yml
 
 atlasprd3_dsn:    DBI:Oracle:host=ora-vm-064.ebi.ac.uk;sid=ATLASPRO;port=1531
-atlasprd3_user:    atlasprd3
+atlasprd3_user:    xxxx
 atlasprd3_pass:    xxxx

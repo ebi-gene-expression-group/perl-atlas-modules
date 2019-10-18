@@ -3,25 +3,25 @@
 # Expression Atlas production code.
 
 MX_DSN:                   DBI:mysql:prod_miamexpress:mysql-prod-miamexpress.ebi.ac.uk:4054
-MX_USERNAME:              curator
+MX_USERNAME:              xxxx
 MX_PASSWORD:              xxxx
 
 AE2_INSTANCE_NAME:        AE2PRD
 AE2_DSN:                  DBI:Oracle:host=ora-vm5-022.ebi.ac.uk;sid=AE2PRO;port=1531
-AE2_USERNAME:             ae2query
+AE2_USERNAME:             xxxx
 AE2_PASSWORD:             xxxx
 
 AEDW_DSN:                 DBI:Oracle:host=ora-vm-064.ebi.ac.uk;sid=ATLASPRO;port=1531
-AEDW_USERNAME:            atlasprd3
-AEDW_PASSWORD:            xxxxx
+AEDW_USERNAME:            xxxx
+AEDW_PASSWORD:            xxxx
 
 AE_PG_DSN:                dbi:Pg:dbname=gxpatlaspro;host=pgsql-hxvm-002.ebi.ac.uk;port=5432
-AE_PG_USERNAME:           atlasprd3
-AE_PG_PASSWORD:           xxxxx
+AE_PG_USERNAME:           xxxx
+AE_PG_PASSWORD:           xxxx
 
 # Submissions Tracking MySQL back-end
 AUTOSUBS_DSN:       DBI:mysql:ae_autosubs:mysql-ae-autosubs-prod.ebi.ac.uk:4091
-AUTOSUBS_USERNAME:  websubs
+AUTOSUBS_USERNAME:  xxxx
 AUTOSUBS_PASSWORD:  xxxx
 
 AUTOSUBMISSIONS_FILEBASE: /nfs/ma/ma-exp/AutoSubmissions/
@@ -31,7 +31,7 @@ ENA_SUBMISSIONS_TARGET:   /nfs/production3/ma/home/atlas3-production/ENA_import
 AUTOSUBMISSIONS_ARRAY_TARGET: /nfs/production3/ma/home/atlas3-production/GEO_import/microarray/ARRAY
 
 AUTOSUBS_ADMIN:           fg_cur@ebi.ac.uk
-AUTOSUBS_ADMIN_USERNAME:  fg_cur
+AUTOSUBS_ADMIN_USERNAME:  xxxx
 
 
 # Email is used by magetab_insert_sub.pl and magetab_insert_array.pl
@@ -79,7 +79,7 @@ VALIDATION_SCRIPT:
 ADF_CHECKED_LIST:        /nfs/production3/ma/home/atlas3-production/sw/configs/adfs_not_in_atlas.txt
 ATLAS_EXPT_CHECKED_LIST: /nfs/production3/ma/home/atlas3-production/sw/configs/expts_checked_for_atlas.txt
 
-PRIVATE_ADF_USERNAME:    curator
+PRIVATE_ADF_USERNAME:    xxxx
 PRIVATE_ADF_PASSWORD:    xxxxx
 PRIVATE_ADF_URI_BASE:    http://www.ebi.ac.uk/arrayexpress/files/
 
