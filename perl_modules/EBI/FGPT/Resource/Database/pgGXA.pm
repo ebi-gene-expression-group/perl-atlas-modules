@@ -311,7 +311,7 @@ sub fetch_differential_experiment_info_from_atlasdb {
     my ( $self, $logger ) = @_;
 
     my $query = "
-        select accession, last_update, title from experiment
+        select accession, last_update from experiment
         where private = 'F'
         and type like '%DIFFERENTIAL'";
 
@@ -335,7 +335,6 @@ sub fetch_differential_experiment_info_from_atlasdb {
         $title = encode( 'UTF-8', $title );
 
         $differentialExperimentsInfo->{ $expAcc }->{ "date" } = $date;
-        $differentialExperimentsInfo->{ $expAcc }->{ "title" } = $title;
     }
 
     $atlasSH->finish;
@@ -351,7 +350,7 @@ sub fetch_baseline_experiment_info_from_atlasdb {
     my ( $self, $logger ) = @_;
 
     my $query = "
-        select accession, last_update, title from experiment
+        select accession, last_update from experiment
         where private = 'F'
         and type like '%BASELINE'";
 
@@ -375,7 +374,6 @@ sub fetch_baseline_experiment_info_from_atlasdb {
         $title = encode( 'UTF-8', $title );
 
         $baselineExperimentsInfo->{ $expAcc }->{ "date" } = $date;
-        $baselineExperimentsInfo->{ $expAcc }->{ "title" } = $title;
     }
 
     $atlasSH->finish;
