@@ -112,11 +112,11 @@ sub _build_supporting_files_path {
             die "ERROR - Cannot find atlasprod directory in path to Atlas::Common. Please ensure this module is installed under atlasprod.\n";
         }
     }
-    push @directories, "supporting_files";
 
     # Stick the remaining directories back together, now pointing to atlasprod directory.
     # Check that the supporting_files dir is in the dir now in $atlasprodDir.
-    my $result = File::Spec->catdir( @directories );
+    my $result = File::Spec->catfile( @directories, "perl-atlas-modules", "supporting_files" );
+
     unless( -d $result ) {
         die "ERROR - Cannot find $result -- cannot locate site config.\n";
     }

@@ -81,7 +81,7 @@ atlas_r_installation: sw/atlasinstall_prod/R_install
 cttv_efo_sparql_script: sw/atlasinstall_prod/atlasprod/db/scripts/get_efo_in_cttv_validation_data.sh
 
 # File containing property types and values to exclude from Zooma mapping.
-zooma_exclusions_file: <CONDA_PREFIX>/atlasprod/supporting_files/zooma_exclusions.yml
+zooma_exclusions_file: <CONDA_PREFIX>/atlasprod/perl-atlas-modules/supporting_files/zooma_exclusions.yml
 
 # File containing accessions of experiments that have been assessed by a curator.
 atlas_curated_accessions_file: sw/configs/atlas_curated_accessions.yml
@@ -91,7 +91,7 @@ no_r_data_accessions_file: sw/configs/no_r_object
 
 # File controllwed vocabulary for experiment types, property types, and
 # protocol names (originally in Conan database).
-aeatlas_controlled_vocab_file: <CONDA_PREFIX>/atlasprod/supporting_files/ae_atlas_controlled_vocabulary.yml
+aeatlas_controlled_vocab_file: <CONDA_PREFIX>/atlasprod/perl-atlas-modules/supporting_files/ae_atlas_controlled_vocabulary.yml
 
 # URL to get ADF info from ArrayExpress.
 arrayexpress_adf_info_url: http://peach.ebi.ac.uk:8480/api/array.txt?acc=
@@ -108,7 +108,7 @@ isl_results_script: software/isl/db/scripts/findCRAMFiles.sh
 isl_study_info_script: software/isl/db/scripts/findStudy.sh
 
 # File containing GXA license (e.g. for XML config files).
-gxa_license_file: <CONDA_PREFIX>/atlasprod/supporting_files/gxa_license.txt
+gxa_license_file: <CONDA_PREFIX>/atlasprod/perl-atlas-modules/supporting_files/gxa_license.txt
 
 # Accessions of microarrays supported by the Atlas pipeline, plus the organism
 # targeted.
@@ -200,7 +200,7 @@ min_pval_dir: /nfs/production3/ma/home/atlas3-production/minPValGt0.5
 
 failed_curation_dir: /nfs/production3/ma/home/atlas3-production/failedCuration
 
-non_standard_experiments_file: <CONDA_PREFIX>/atlasprod/supporting_files/non_standard_experiments.yml
+non_standard_experiments_file: <CONDA_PREFIX>/atlasprod/perl-atlas-modules/supporting_files/non_standard_experiments.yml
 
 atlasprd3_dsn:    DBI:Oracle:host=ora-vm-xxx.ebi.ac.uk;sid=ATLASPRO;port=1531
 atlasprd3_user:    xxxx
