@@ -210,9 +210,10 @@ sub BUILD
 		}
 		my $gse       = $self->get_acc;
 		my $soft_name = $gse . "_family.soft";
+		my $gse_nnn   = substr($gse, 0, -3) . "nnn";
 		my $uri       =
-		  "ftp://ftp.ncbi.nih.gov/pub/geo/DATA/SOFT/by_series/" . $gse . "/"
-		  . $soft_name . ".gz";
+			"ftp://ftp.ncbi.nlm.nih.gov/geo/series/" . $gse_nnn . "/" . $gse . "/" . "soft" . "/"
+			. $soft_name . ".gz";
 
 		$soft_name = $self->_download_file( $uri, $self->get_target_dir )
 		  or $logger->error("Could not download soft file for $gse from $uri");
