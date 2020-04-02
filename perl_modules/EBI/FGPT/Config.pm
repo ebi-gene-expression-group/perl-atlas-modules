@@ -253,12 +253,12 @@ sub _build_yaml_file_path {
     my $atlasprodDir = File::Spec->catdir( @directories );
 
     # Check that the supporting_files dir is in the dir now in $atlasprodDir.
-    unless( -d File::Spec->catdir( $atlasprodDir, "perl-atlas-modules", "supporting_files" ) ) {
+    unless( -d File::Spec->catdir( $atlasprodDir, "supporting_files" ) ) {
         die "ERROR - Cannot find supporting_files directory in $atlasprodDir -- cannot locate ArrayExpress site config.\n";
     }
 
     # Otherwise, create path to site config.
-    my $siteConfigPath = File::Spec->catfile( $atlasprodDir, "perl-atlas-modules", "supporting_files", "ArrayExpressSiteConfig.yml" );
+    my $siteConfigPath = File::Spec->catfile( $atlasprodDir, "supporting_files", "ArrayExpressSiteConfig.yml" );
 
     # Check that the file exists and is readable.
     unless( -r $siteConfigPath ) {
