@@ -115,7 +115,7 @@ sub _build_supporting_files_path {
 
     # Stick the remaining directories back together, now pointing to atlasprod directory.
     # Check that the supporting_files dir is in the dir now in $atlasprodDir.
-    my $result = File::Spec->catfile( @directories, "perl-atlas-modules", "supporting_files" );
+    my $result = File::Spec->catfile( @directories, "supporting_files" );
 
     unless( -d $result ) {
         die "ERROR - Cannot find $result -- cannot locate site config.\n";

@@ -192,8 +192,8 @@ sub add_experiment_type {
 	
     my ($self, $magetab) = @_;
 
- 	#An array of AEExperimentType terms that are allowed in Atlas.
- 	my $allowedAtlasExperimentTypesFile = "$abs_path/../../supporting_files/ae_atlas_controlled_vocabulary.yml";
+    #An array of AEExperimentType terms that are allowed in Atlas.
+    my $allowedAtlasExperimentTypesFile = "$abs_path/../../supporting_files/ae_atlas_controlled_vocabulary.yml";
     my $allowedAtlasExperimentTypes = Config::YAML->new(
              config => $allowedAtlasExperimentTypesFile
                  );
