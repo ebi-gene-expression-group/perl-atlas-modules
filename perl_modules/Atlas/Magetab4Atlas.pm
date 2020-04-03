@@ -47,6 +47,9 @@ use Moose;
 use MooseX::FollowPBP;
 use File::Basename;
 use Log::Log4perl;
+use File::Spec;
+use File::Basename;
+use Config::YAML;
 
 use Bio::MAGETAB::Util::Reader;
 use Atlas::AtlasAssayFactory;
@@ -131,6 +134,9 @@ has 'strict' => (
 
 my $logger = Log::Log4perl::get_logger;
 
+# Absolute directory path to the file storage
+my $abs_path = dirname(File::Spec->rel2abs(__FILE__));
+
 =head1 METHODS
 
 Each attribute has accessor (get_*), mutator (set_*), and predicate (has_*) methods.
@@ -186,17 +192,14 @@ sub add_experiment_type {
 	
     my ($self, $magetab) = @_;
 
+    #An array of AEExperimentType terms that are allowed in Atlas.
+    my $allowedAtlasExperimentTypesFile = "$abs_path/../../supporting_files/ae_atlas_controlled_vocabulary.yml";
+    my $allowedAtlasExperimentTypes = Config::YAML->new(
+             config => $allowedAtlasExperimentTypesFile
+                 );
+
 	#An array of AEExperimentType terms that are allowed in Atlas.
-	my @allowedAEExperimentTypes = (
-        "antigen profiling",
-        "proteomic profiling by mass spectrometer",
-		"transcription profiling by array",
-		"microRNA profiling by array",
-		"RNA-seq of coding RNA",
-		"RNA-seq of non coding RNA",
-		"RNA-seq of coding RNA from single cells",
-		"RNA-seq of non coding RNA from single cells"
-	);
+    my @allowedAEExperimentTypes = @{ $allowedAtlasExperimentTypes->get_atlas_experiment_types };
 
 	# Extract the experiment ID
  	my $exptAcc = $self->get_experiment_accession;	

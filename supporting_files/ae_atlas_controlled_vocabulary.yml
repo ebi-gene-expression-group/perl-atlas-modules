@@ -3,8 +3,13 @@
 atlas_experiment_types:
     - transcription profiling by array
     - microRNA profiling by array
+    - antigen profiling
+    - proteomic profiling by mass spectrometer
     - RNA-seq of coding RNA
+    - RNA-seq of non coding RNA
+    - RNA-seq of total RNA
     - RNA-seq of coding RNA from single cells
+    - RNA-seq of non coding RNA from single cells
 
 # Atlas eligible property types.
 atlas_property_types:
