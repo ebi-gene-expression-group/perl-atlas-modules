@@ -847,18 +847,18 @@ sub _make_id_ref_map_for
 
 sub write_magetab
 {
-    my ($self, $prefix_idf) = @_;
+	my ($self, $prefix_idf) = @_;
 
-    my $idf;
-    
-    if ($prefix_idf) {
-        $logger->warn("Writing IDF with prefix - $prefix_idf");
-        $idf = File::Spec->catfile( $self->get_target_dir, $self->get_acc . ".$prefix_idf" .".idf.txt" );
-    }
-    else {
-        $idf = File::Spec->catfile( $self->get_target_dir, $self->get_acc . ".idf.txt" );
-    }
+	my $idf;
 
+	if ($prefix_idf) {
+		$logger->warn("Writing IDF with prefix - $prefix_idf");
+		$idf = File::Spec->catfile( $self->get_target_dir, $self->get_acc . ".$prefix_idf" . ".idf.txt" );
+	}
+	else {
+		$idf = File::Spec->catfile( $self->get_target_dir, $self->get_acc . ".idf.txt" );
+	}
+	
 	open( my $idf_fh, ">:encoding(utf-8)", $idf )
 	  or $logger->error("Could not open IDF $idf for writing - $!");
 
