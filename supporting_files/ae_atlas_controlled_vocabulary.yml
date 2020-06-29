@@ -171,6 +171,7 @@ atlas_property_types:
 
 # ArrayExpress eligible experiment types.
 arrayexpress_experiment_types:
+    - spatial transcriptomics
     - Ribo-seq
     - ATAC-seq
     - GRO-seq
