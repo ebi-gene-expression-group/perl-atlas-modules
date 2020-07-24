@@ -1390,26 +1390,26 @@ Checks ADF(s) against YAML config file to ensure they are supported by the Atlas
 
 sub check_microarray_adf_support {
 
-	my ( $self ) = @_;
+    my ($self) = @_;
 
-    $self->info( "Checking for array design support in Atlas..." );
-	
+    $self->info("Checking for array design support in Atlas...");
+
     my $microarrayAssays = $self->_collect_microarray_assays;
 
-    unless( @{ $microarrayAssays } ) {
+    unless (@{$microarrayAssays}) {
 
-        $self->debug( "No microarray assays found, not checking array design support." );
+        $self->debug("No microarray assays found, not checking array design support.");
 
         return;
     }
-    
+
     # Get the unique array design accessions from these assays.
 
     my $assaysWithAdfs = {};
 
-    foreach my $assay ( @{ $microarrayAssays } ) {
+    foreach my $assay (@{$microarrayAssays}) {
 
-        unless( $assay->has_arrayDesign ) {
+        unless ($assay->has_arrayDesign) {
 
             $self->warn(
                 "No array design found for assay \"",
@@ -1417,17 +1417,17 @@ sub check_microarray_adf_support {
                 "\" -- cannot check array design support."
             );
 
-            $self->_add_atlas_fail_code( -2 );
+            $self->_add_atlas_fail_code(-2);
 
             next;
         }
-        else { 
+        else {
             $assaysWithAdfs->{ $assay->get_name } = $assay;
         }
     }
-    
+
     # If there are no assays with ADFs, quit here.
-    unless( keys %{ $assaysWithAdfs } ) {
+    unless (keys %{$assaysWithAdfs}) {
 
         $self->error(
             "No assays with array designs found."
@@ -1436,131 +1436,133 @@ sub check_microarray_adf_support {
         return;
     }
 
-    my %magetabAdfAccs = map { $_->get_arrayDesign->get_name => 1 } ( values %{ $assaysWithAdfs } );
-    
-    
-    
-    #######################################
-    #######################################
-    # TODO: can/should we consolidate files?
-	my $adf_tracking_file_path = $CONFIG->get_ADF_CHECKED_LIST;
+    my %magetabAdfAccs = map {$_->get_arrayDesign->get_name => 1} (values %{$assaysWithAdfs});
 
-	my $expt_tracking_file_path = $CONFIG->get_ATLAS_EXPT_CHECKED_LIST;
 
-	my ( %absent_adf_acc_count, @checked_expt_list );
 
-	open( IN, $adf_tracking_file_path )
-	  || $self->logdie(
-"Can't open file $adf_tracking_file_path to fetch the list of ADFs which are not in the Atlas database."
-	  );
 
-	while (<IN>) {
-		my ( $old_adf_acc, $count ) = $_ =~ /^(A-[A-Z]{4}-\d+)\t(\d+)$/;
-		$absent_adf_acc_count{$old_adf_acc} = $count;
-	}
+    my $use_tracking_files = $CONFIG->get_USE_CHECKED_LIST_FILE;
+    my (%absent_adf_acc_count, @checked_expt_list);
 
-	close IN;
 
-	open( IN2, $expt_tracking_file_path )
-	  || $self->logdie(
-"Can't open file $expt_tracking_file_path to fetch the list of experiments already checked for Atlas eligibility."
-	  );
-
-	while (<IN2>) {
-		chomp $_;
-		push( @checked_expt_list, $_ );
-	}
-
-	close IN2;
-
-# We need to keep track of whether this experiment has been checked before for Atlas eligibility
-# If yes, and if the experiment's ADF is not in Atlas database, we don't increment the ADF count
-# in adfs_not_in_atlas.txt file (or else many ADFs will be counted multiple times as the cause
-# of failing Atlas eligiblity)
-
-	my @acc_comments =
-	  grep { $_->get_name eq "ArrayExpressAccession" }
-	  @{ $self->get_investigation->get_comments || [] };
-	my $expt_acc;
-	if ( $acc_comments[0] )
-	{ # In case the spreadsheet is in AE curation stage still and has no such comment yet
-		$expt_acc = $acc_comments[0]->get_value if ( $acc_comments[0] );
-	}
-	else {
-		$expt_acc = "dummy_expt_acc";
-	}
-    # TODO: end
-    #######################################
-    #######################################
+    my @acc_comments =
+        grep {$_->get_name eq "ArrayExpressAccession"}
+            @{$self->get_investigation->get_comments || []};
+    my $expt_acc;
+    if ($acc_comments[0]) { # In case the spreadsheet is in AE curation stage still and has no such comment yet
+        $expt_acc = $acc_comments[0]->get_value if ($acc_comments[0]);
+    }
+    else {
+        $expt_acc = "dummy_expt_acc";
+    }
 
 
     my $atlasSiteConfig = $self->get_atlas_site_config;
 
-    my %supportedAdfs = map { $_ => 1 } ( keys %{ $atlasSiteConfig->get_atlas_supported_adfs } );
+    my %supportedAdfs = map {$_ => 1} (keys %{$atlasSiteConfig->get_atlas_supported_adfs});
 
-	foreach my $arrayDesignAcc ( keys %magetabAdfAccs ) {
-        
-		if ( $arrayDesignAcc =~ /A-[A-Z]{4}-\d+$/ ) {
-		
-			### FIXME: Need to get ADF synonyms and parse them too. get from AE2 DB?
+    foreach my $arrayDesignAcc (keys %magetabAdfAccs) {
 
-			unless( $supportedAdfs{ $arrayDesignAcc } ) {
-				
+        if ($arrayDesignAcc =~ /A-[A-Z]{4}-\d+$/) {
+
+            ### FIXME: Need to get ADF synonyms and parse them too. get from AE2 DB?
+
+            unless ($supportedAdfs{ $arrayDesignAcc }) {
+
                 $self->error(
-					"Array design \"$arrayDesignAcc\" is not currently supported by Atlas."
+                    "Array design \"$arrayDesignAcc\" is not currently supported by Atlas."
                 );
-				
-                $self->_add_atlas_fail_code( 2 );
-				
-				# if this experiment is checked for Atlas eligility for the first time
-                if ( ( !grep $expt_acc eq $_, @checked_expt_list ) ) {
 
-                    push( @checked_expt_list, $expt_acc );
-					
-					# if this ADF acc has been flagged before, increment the count
-                    if ( $absent_adf_acc_count{ $arrayDesignAcc } ) {
-						$absent_adf_acc_count{ $arrayDesignAcc }++;
-					}
-					else {
-						# initiate a record of this ADF acc and start with count 1
-						$absent_adf_acc_count{ $arrayDesignAcc } = 1;
-					}
-				}
-			}
-		}
+                $self->_add_atlas_fail_code(2);
+
+                # if this experiment is checked for Atlas eligility for the first time
+                if ((!grep $expt_acc eq $_, @checked_expt_list)) {
+
+                    push(@checked_expt_list, $expt_acc);
+
+                    # if this ADF acc has been flagged before, increment the count
+                    if ($absent_adf_acc_count{ $arrayDesignAcc }) {
+                        $absent_adf_acc_count{ $arrayDesignAcc }++;
+                    }
+                    else {
+                        # initiate a record of this ADF acc and start with count 1
+                        $absent_adf_acc_count{ $arrayDesignAcc } = 1;
+                    }
+                }
+            }
+        }
         # Catch cases where non AE ADF accession is provided.
-		else {
+        else {
 
-			$self->error(
+            $self->error(
                 "Array design \"",
                 $arrayDesignAcc,
                 "\" is not a valid ArrayExpress array design accession and hence is not supported by Atlas."
-			);
+            );
 
-			$self->_add_atlas_fail_code( 2 );
-		}
-	}
+            $self->_add_atlas_fail_code(2);
+        }
+    }
 
-	# TODO: investigate consolidating the two files.
-    # Now update the tracking files
-	open( OUT, ">$adf_tracking_file_path" )
-	  || $self->logdie(
-"Can't open file $adf_tracking_file_path to write the list of updated ADFs which are not supported by Atlas."
-	  );
-	foreach my $key ( keys %absent_adf_acc_count ) {
-		print OUT "$key\t$absent_adf_acc_count{$key}\n";
-	}
-	close OUT;
+    if ($use_tracking_files) {
 
-	open( OUT2, ">$expt_tracking_file_path" )
-	  || $self->logdie(
-"Can't open file $expt_tracking_file_path to write the list of experiments already checked for Atlas eligiblity."
-	  );
-	foreach (@checked_expt_list) {
-		print OUT2 "$_\n";
-	}
-	close OUT2;
+        #######################################
+        #######################################
+        # TODO: can/should we consolidate files?
 
+        my $adf_tracking_file_path = $CONFIG->get_ADF_CHECKED_LIST;
+
+        my $expt_tracking_file_path = $CONFIG->get_ATLAS_EXPT_CHECKED_LIST;
+
+        open(IN, $adf_tracking_file_path)
+            || $self->logdie(
+            "Can't open file $adf_tracking_file_path to fetch the list of ADFs which are not in the Atlas database."
+        );
+
+        while (<IN>) {
+            my ($old_adf_acc, $count) = $_ =~ /^(A-[A-Z]{4}-\d+)\t(\d+)$/;
+            $absent_adf_acc_count{$old_adf_acc} = $count;
+        }
+
+        close IN;
+
+        open(IN2, $expt_tracking_file_path)
+            || $self->logdie(
+            "Can't open file $expt_tracking_file_path to fetch the list of experiments already checked for Atlas eligibility."
+        );
+
+        while (<IN2>) {
+            chomp $_;
+            push(@checked_expt_list, $_);
+        }
+
+        close IN2;
+
+    # We need to keep track of whether this experiment has been checked before for Atlas eligibility
+    # If yes, and if the experiment's ADF is not in Atlas database, we don't increment the ADF count
+    # in adfs_not_in_atlas.txt file (or else many ADFs will be counted multiple times as the cause
+    # of failing Atlas eligiblity)
+
+        # TODO: investigate consolidating the two files.
+        # Now update the tracking files
+        open(OUT, ">$adf_tracking_file_path")
+            || $self->logdie(
+            "Can't open file $adf_tracking_file_path to write the list of updated ADFs which are not supported by Atlas."
+        );
+        foreach my $key (keys %absent_adf_acc_count) {
+            print OUT "$key\t$absent_adf_acc_count{$key}\n";
+        }
+        close OUT;
+
+        open(OUT2, ">$expt_tracking_file_path")
+            || $self->logdie(
+            "Can't open file $expt_tracking_file_path to write the list of experiments already checked for Atlas eligiblity."
+        );
+        foreach (@checked_expt_list) {
+            print OUT2 "$_\n";
+        }
+        close OUT2;
+    }
     $self->info( "Finshed checking for Atlas array design support..." );
 }
 
