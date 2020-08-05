@@ -1440,8 +1440,11 @@ sub check_microarray_adf_support {
 
 
 
-
-    my $use_tracking_files = $CONFIG->get_USE_CHECKED_LIST_FILE;
+    # A "true" flag in the config can be used to skip the writing to the "checked files"
+    my $skip_tracking_files = $CONFIG->get_SKIP_CHECKED_LIST_FILES eq "true";
+    if ($skip_tracking_files) {
+        $self->debug("Skipping writing to ADF checked files");
+    }
     my (%absent_adf_acc_count, @checked_expt_list);
 
 
@@ -1504,7 +1507,7 @@ sub check_microarray_adf_support {
         }
     }
 
-    if ($use_tracking_files) {
+    unless ($skip_tracking_files) {
 
         #######################################
         #######################################
