@@ -2676,7 +2676,7 @@ sub _make_fvs_from_gds
 		my $gds_num_nnn = substr($gds_num, 0, -3) . "nnn";
 		my $gds_uri =
 		  "ftp://ftp.ncbi.nlm.nih.gov/geo/datasets/" . $gds_num_nnn . "/" . $gds_num . "/" . "soft" . "/"
-		   . soft . ".gz";
+          . $gds_num . ".soft.gz";
 		my $path = $self->_download_file( $gds_uri, $self->get_target_dir );
 		$path = $self->get_target_dir . $path;
 		unless ($path)
