@@ -2673,8 +2673,10 @@ sub _make_fvs_from_gds
 		$logger->info("Adding GDS accession $gds_num to IDF");
 
 		# Download the GDS file to the target directory
+		my $gds_num_nnn = substr($gds_num, 0, -3) . "nnn";
 		my $gds_uri =
-		  "ftp://ftp.ncbi.nih.gov/pub/geo/DATA/SOFT/GDS/" . $gds_num . ".soft.gz";
+		  "ftp://ftp.ncbi.nlm.nih.gov/geo/datasets/" . $gds_num_nnn . "/" . $gds_num  "/" . "soft" . "/"
+		   . soft . ".gz";
 		my $path = $self->_download_file( $gds_uri, $self->get_target_dir );
 		$path = $self->get_target_dir . $path;
 		unless ($path)
