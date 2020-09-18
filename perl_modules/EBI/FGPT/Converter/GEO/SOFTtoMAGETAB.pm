@@ -210,7 +210,7 @@ sub BUILD
 		}
 		my $gse       = $self->get_acc;
 		my $soft_name = $gse . "_family.soft";
-		my $gse_nnn   = substr($gse, 0, -3) . "nnn";
+		my $gse_nnn   = substr($gse, 0, 3) . "nnn";
 		my $uri       =
 			"ftp://ftp.ncbi.nlm.nih.gov/geo/series/" . $gse_nnn . "/" . $gse . "/" . "soft" . "/"
 			. $soft_name . ".gz";
@@ -2673,7 +2673,7 @@ sub _make_fvs_from_gds
 		$logger->info("Adding GDS accession $gds_num to IDF");
 
 		# Download the GDS file to the target directory
-		my $gds_num_nnn = substr($gds_num, 0, -3) . "nnn";
+		my $gds_num_nnn = substr($gds_num, 0, 3) . "nnn";
 		my $gds_uri =
 		  "ftp://ftp.ncbi.nlm.nih.gov/geo/datasets/" . $gds_num_nnn . "/" . $gds_num . "/" . "soft" . "/"
           . $gds_num . ".soft.gz";
