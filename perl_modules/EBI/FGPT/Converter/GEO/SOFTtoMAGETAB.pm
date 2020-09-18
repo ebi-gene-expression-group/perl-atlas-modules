@@ -210,7 +210,7 @@ sub BUILD
 		}
 		my $gse       = $self->get_acc;
 		my $soft_name = $gse . "_family.soft";
-		my $gse_nnn   = substr($gse, 0, 3) . "nnn";
+		my $gse_nnn   = substr($gse, 0, -3) . "nnn";
 		my $uri       =
 			"ftp://ftp.ncbi.nlm.nih.gov/geo/series/" . $gse_nnn . "/" . $gse . "/" . "soft" . "/"
 			. $soft_name . ".gz";
