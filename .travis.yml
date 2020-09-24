@@ -2,15 +2,17 @@ sudo: required
 
 language: perl
 perl:
-  - "5.20" 
-  - "5.22"
-  - "5.26"    
+  - "5.20"    
 
 before_install:
   - perl -V
 
 install:
   - cpanm MooseX::FollowPBP URI::Escape URL::Encode Config::YAML File::Basename Bio::MAGETAB Date::Parse Test::MockObject Text::TabularDisplay Log::Dispatch::File
+
+before_install:
+  - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
+  - source ~/travis-perl-helpers/init --auto
 
 script:
   - bash run-tests.sh
