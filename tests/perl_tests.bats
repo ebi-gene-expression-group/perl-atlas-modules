@@ -1,5 +1,12 @@
 #!/usr/bin/env bats
 
+setup() {
+  atlasprodDir='atlasprod'
+  mkdir -p $DIR/$atlasprodDir
+  ln -s $DIR/../perl_modules $atlasprodDir/perl_modules
+  ln -s $DIR/../supporting_files $atlasprodDir/supporting_files
+  export PERL5LIB=$atlasprodDir/perl_modules:$PERL5LIB
+}
 
 @test "Check that perl is in the path" {
     run which perl
@@ -20,7 +27,7 @@
   if [ -z ${PERL5LIB+x} ]; then
     skip "PERL5LIB not defined"
   fi
-  run import_geo_subs.pl -n -x -f microarray_geo.txt -o $BATS_TEMP
+  run import_geo_subs.pl -n -x -f microarray_geo.txt -o $BATS_TMPDIR
   echo "output = ${output}"
   [ "$status" -eq 0 ]
 }
@@ -29,7 +36,7 @@
   if [ -z ${PERL5LIB+x} ]; then
     skip "PERL5LIB not defined"
   fi
-  run import_geo_subs.pl -n -x -f rnaseq_geo.txt -o $BATS_TEMP
+  run import_geo_subs.pl -n -x -f rnaseq_geo.txt -o $BATS_TMPDIR
   echo "output = ${output}"
   [ "$status" -eq 0 ]
 }
@@ -38,7 +45,7 @@
   if [ -z ${PERL5LIB+x} ]; then
     skip "PERL5LIB not defined"
   fi
-  run import_geo_subs.pl -n -x -f scrnaseq_geo.txt -o $BATS_TEMP
+  run import_geo_subs.pl -n -x -f scrnaseq_geo.txt -o $BATS_TMPDIR
   echo "output = ${output}"
   [ "$status" -eq 0 ]
 }

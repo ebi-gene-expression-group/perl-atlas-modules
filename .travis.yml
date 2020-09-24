@@ -43,7 +43,7 @@ install:
 
 before_script:
     - export PATH=$PWD/tests:$PATH
-    - export PERL5LIB=$PWD/perl_modules:$PERL5LIB
+    - echo $PERL5LIB
 
 cache:
   directories:
