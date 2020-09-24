@@ -1,10 +1,7 @@
 #!/usr/bin/env bats
 
 setup() {
-  atlasprodDir='atlasprod'
-  mkdir -p $DIR/$atlasprodDir
-  ln -s $DIR/../perl_modules $atlasprodDir/perl_modules
-  ln -s $DIR/../supporting_files $atlasprodDir/supporting_files
+  atlasprodDir="atlasprod"
   export PERL5LIB=$atlasprodDir/perl_modules:$PERL5LIB
 }
 
