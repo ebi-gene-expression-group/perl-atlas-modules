@@ -38,8 +38,7 @@ install:
   - export PATH="$HOME/miniconda/bin:$PATH";
   - source activate test-environment
   - conda install --yes -c bioconda perl-archive-extract
-  - conda install --yes -c dan_blanchard perl-io-capture
-
+  - cpanm IO::CaptureOutput
 
 before_script:
     - export PATH=$PWD/tests:$PATH
