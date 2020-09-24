@@ -38,7 +38,8 @@ install:
   - export PATH="$HOME/miniconda/bin:$PATH";
   - source activate test-environment
   - conda install --yes -c bioconda perl-archive-extract
-  - cpanm IO::CaptureOutput DBD::Oracle
+  - conda install --yes -c eumetsat perl-dbd-oracle
+  - cpanm IO::CaptureOutput 
 
 before_script:
     - export PATH=$PWD/tests:$PATH
