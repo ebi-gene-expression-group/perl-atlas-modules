@@ -37,7 +37,7 @@ before_install:
 install:
   - export PATH="$HOME/miniconda/bin:$PATH";
   - source activate test-environment
-  - conda install -c bioconda perl-archive-extract
+  - conda install --yes -c bioconda perl-archive-extract
 
 before_script:
     - export PATH=$PWD/tests:$PATH
