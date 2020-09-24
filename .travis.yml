@@ -10,10 +10,11 @@ before_install:
   - perl -V
 
 install:
-  - cpanm MooseX::FollowPBP URI::Escape URL::Encode Config::YAML File::Basename Bio::MAGETAB Date::Parse Test::MockObject Text::TabularDisplay Log::Dispatch::File
+  - cpanm --installdeps MooseX::FollowPBP URI::Escape URL::Encode Config::YAML File::Basename Bio::MAGETAB Date::Parse Test::MockObject Text::TabularDisplay Log::Dispatch::File Archive::Extract
 
 before_script:
     - export PATH=$PWD/tests:$PATH
+    - export PERL5LIB=$PWD/perl_modules:$PERL5LIB
 
 script:
   - bash run-tests.sh

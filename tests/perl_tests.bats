@@ -1,15 +1,17 @@
+#!/usr/bin/env bats
+
 
 @test "Check that perl is in the path" {
     run which perl
     [ "$status" -eq 0 ]
 }
 
-@test "Check geo import scripts in the path" {
+@test "Check [geo import] main scripts in the path" {
     run which import_geo_subs.pl
     [ "$status" -eq 0 ]
 }
 
-@test "Check geo import scripts in the path" {
+@test "Check [geo import] magetab convertor in the path" {
     run which new_soft2magetab.pl
     [ "$status" -eq 0 ]
 }
