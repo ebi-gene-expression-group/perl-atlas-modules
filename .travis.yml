@@ -2,7 +2,9 @@ sudo: required
 
 language: perl
 perl:
-  - "5.26"    
+  - "5.26" 
+  - "5.20"   
+  - "5.18"  
 
 before_install:
   - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
@@ -39,6 +41,8 @@ install:
   - source activate test-environment
   - conda install --yes -c bioconda perl-archive-extract
   - conda install --yes -c eumetsat perl-dbd-oracle
+  - conda install --yes -c bioconda perl-clone
+  - conda install --yes -c biocondaperl-mime-lite
   - cpanm IO::CaptureOutput Class::DBI
 
 before_script:
