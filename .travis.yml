@@ -47,7 +47,8 @@ install:
 
 before_script:
     - export PATH=$PWD/tests:$PATH
-    - echo $PERL5LIB
+    - export PERL5LIB=$PWD/tests/atlasprod/perl_modules:$PERL5LIB
+    - export FASTQ_FILE_REPORT='http://ftp.ebi.ac.uk/pub/databases/ena/report/fastqFileReport.gz'
     - perl -V
 
 cache:

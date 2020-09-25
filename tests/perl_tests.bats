@@ -1,9 +1,7 @@
 #!/usr/bin/env bats
 
 setup() {
-  atlasprodDir="atlasprod"
-  export PERL5LIB=$PWD/tests/$atlasprodDir/perl_modules:$PERL5LIB
-  export FASTQ_FILE_REPORT='http://ftp.ebi.ac.uk/pub/databases/ena/report/fastqFileReport.gz'
+  $atlasprodDir="atlasprod"
 }
 
 @test "Check that perl is in the path" {
