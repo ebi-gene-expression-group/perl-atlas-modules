@@ -1,8 +1,5 @@
 #!/usr/bin/env bats
 
-setup() {
-  $atlasprodDir="atlasprod"
-}
 
 @test "Check that perl is in the path" {
     run which perl
