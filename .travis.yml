@@ -47,7 +47,8 @@ install:
 
 before_script:
     - export PATH=$PWD/tests:$PATH
-    - export PERL5LIB=$PWD/tests/atlasprod/perl_modules:$PERL5LIB
+    - rsync -avz --delete –update $PWD/perl_modules $HOME/miniconda/envs/test-environment/atlasprod
+    - rsync -avz --delete –update $PWD/supporting_files $HOME/miniconda/envs/test-environment/atlasprod
     - export FASTQ_FILE_REPORT='http://ftp.ebi.ac.uk/pub/databases/ena/report/fastqFileReport.gz'
     - perl -V
 
