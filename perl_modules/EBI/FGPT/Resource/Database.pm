@@ -37,7 +37,7 @@ use warnings;
 use Moose;
 use MooseX::FollowPBP;
 use DBI;
-use DBD::Oracle;
+#use DBD::Oracle;
 
 use Log::Log4perl qw(:easy);
 

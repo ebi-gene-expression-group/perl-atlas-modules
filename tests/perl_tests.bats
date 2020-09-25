@@ -2,7 +2,7 @@
 
 setup() {
   atlasprodDir="atlasprod"
-  export PERL5LIB=$atlasprodDir/perl_modules:$PERL5LIB
+  export PERL5LIB=$PWD/tests/$atlasprodDir/perl_modules:$PERL5LIB
 }
 
 @test "Check that perl is in the path" {

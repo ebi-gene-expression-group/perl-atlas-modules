@@ -39,11 +39,12 @@ install:
   - source activate test-environment
   - conda install --yes -c bioconda perl-archive-extract
   - conda install --yes -c eumetsat perl-dbd-oracle
-  - cpanm IO::CaptureOutput 
+  - cpanm IO::CaptureOutput Class::DBI
 
 before_script:
     - export PATH=$PWD/tests:$PATH
     - echo $PERL5LIB
+    - perl -V
 
 cache:
   directories:
