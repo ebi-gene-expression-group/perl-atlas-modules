@@ -210,7 +210,7 @@ sub BUILD
 		}
 		my $gse       = $self->get_acc;
 		my $soft_name = $gse . "_family.soft";
-		my $gse_nnn   = substr($gse, 0, -3) . "nnn";
+		my $gse_nnn   = make_geo_string( $gse );
 		my $uri       =
 			"ftp://ftp.ncbi.nlm.nih.gov/geo/series/" . $gse_nnn . "/" . $gse . "/" . "soft" . "/"
 			. $soft_name . ".gz";
@@ -2673,8 +2673,10 @@ sub _make_fvs_from_gds
 		$logger->info("Adding GDS accession $gds_num to IDF");
 
 		# Download the GDS file to the target directory
+		my $gds_num_nnn = make_geo_string( $gds_num );
 		my $gds_uri =
-		  "ftp://ftp.ncbi.nih.gov/pub/geo/DATA/SOFT/GDS/" . $gds_num . ".soft.gz";
+		  "ftp://ftp.ncbi.nlm.nih.gov/geo/datasets/" . $gds_num_nnn . "/" . $gds_num . "/" . "soft" . "/"
+          . $gds_num . ".soft.gz";
 		my $path = $self->_download_file( $gds_uri, $self->get_target_dir );
 		$path = $self->get_target_dir . $path;
 		unless ($path)
@@ -2882,6 +2884,28 @@ sub _make_fvs_from_chars
 	###########################################################################
 
 	return;
+}
+
+## This function prepends "nnn" characters to GSE/GDSxxx 
+## to create path towards subdirectory for new GEO set up		   
+sub make_geo_string 
+{
+    my ( $geo_id ) = @_;
+    my $geo_num_nnn;
+
+    my $geo_digits = length(substr($geo_id, 3));
+
+    if ( "$geo_digits" < 3 ){
+        $geo_num_nnn =  substr($geo_id, 0, 3) . "nnn";
+    }
+    elsif ( "$geo_digits" >= 3 ){
+        $geo_num_nnn =  substr($geo_id, 0, -3) . "nnn";
+    }
+    else {
+            $logger->error("Unrecognised format - ", $geo_id);
+        }
+        
+    return $geo_num_nnn;
 }
 
 sub load_gse_gds_map
