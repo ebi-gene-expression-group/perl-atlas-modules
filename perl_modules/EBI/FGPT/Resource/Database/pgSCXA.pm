@@ -55,7 +55,7 @@ sub fetch_experiment_celltypes_from_sc_atlasdb {
     $atlasSH->execute or $logger->logdie( "Could not execute query: ", $atlasSH->errstr );
 
     # Empty hash for the results.
-    my $xpAcc2celltypes = {};
+    my $expAcc2celltypes = {};
 
     # Go through the results and get the accessions and values.
     while( my $row = $atlasSH->fetchrow_arrayref ) {
