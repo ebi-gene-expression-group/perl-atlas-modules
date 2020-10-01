@@ -191,7 +191,7 @@ sub fetch_experiments_collections_from_sc_atlasdb {
 
         my $collections = [];
 
-        if( $pmidString ) {
+        if( $collectionString ) {
             my @splitString = split( ", ", $collectionString );
 
             push @{ $collections }, @splitString;
