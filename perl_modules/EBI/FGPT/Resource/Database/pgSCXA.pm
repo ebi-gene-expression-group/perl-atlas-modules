@@ -34,11 +34,9 @@ sub fetch_experiment_celltypes_from_sc_atlasdb {
 
     my ( $self, $logger ) = @_;
 
-    #my $accessions4query = "'" . join( "', '", @{ $accessions } ) . "'";
-
     my $query = "
         SELECT distinct EXPERIMENT_ACCESSION, VALUE FROM SCXA_CELL_GROUP
-       WHERE VARIABLE like '%cell%' and VALUE !='Not available'";
+        WHERE VARIABLE like '%cell%' and VALUE !='Not available'";
 
     # Get the database handle.
     my $atlasDBH = $self->get_dbh
@@ -81,49 +79,6 @@ sub fetch_experiment_celltypes_from_sc_atlasdb {
     return $expAcc2celltypes;
 }
 
-
-sub fetch_collections_from_sc_atlasdb {
-
-    my ( $self, $accessions, $logger ) = @_;
-
-    my $accessions4query = "'" . join( "', '", @{ $accessions } ) . "'";
-
-    my $query = "
-        select ACCESSION, to_char( LAST_UPDATE, 'YYYY-MM-DD HH24:MI:SS' )
-        from EXPERIMENT
-        where ACCESSION in ($accessions4query)
-        and PRIVATE = 'F'";
-
-    my $atlasDBH = $self->get_dbh
-        or $logger->logdie( "Could not get database handle: $DBI::errstr" );
-
-    $logger->info( "Querying SC Atlas database for last processing date of experiments..." );
-
-    # Get statement handle by preparing query.
-    my $atlasSH = $atlasDBH->prepare( $query )
-        or $logger->logdie( "Could not prepare query: ", $atlasDBH->errstr );
-
-    # Execute the query.
-    $atlasSH->execute or $logger->logdie( "Could not execute query: ", $atlasSH->errstr );
-
-    my $expAcc2date = {};
-
-    while( my $row = $atlasSH->fetchrow_arrayref ) {
-
-        my ( $expAcc, $procDate ) = @{ $row };
-
-        # Add the dates to the hash.
-        unless( $expAcc2date->{ $expAcc } ) {
-            $expAcc2date->{ $expAcc } = $procDate;
-        }
-    }
-
-    $atlasSH->finish;
-
-    $logger->info( "Query successful." );
-
-    return $expAcc2date;
-}
 
 
 sub fetch_pmids_from_sc_atlasdb {
@@ -195,7 +150,7 @@ sub fetch_experiments_collections_from_sc_atlasdb {
     my $expCellTypes = [];
     my $expAcc;
     my $collection;
-    use Data::Dumper;
+    
     # Go through the results and get the accessions and values.
     while( my $row = $atlasSH->fetchrow_arrayref ) {
 
