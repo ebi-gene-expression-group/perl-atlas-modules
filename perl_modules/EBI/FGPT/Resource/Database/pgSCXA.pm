@@ -32,14 +32,13 @@ sub BUILD{
 
 sub fetch_experiment_celltypes_from_sc_atlasdb {
 
-    my ( $self, $accessions, $logger ) = @_;
+    my ( $self, $logger ) = @_;
 
-    my $accessions4query = "'" . join( "', '", @{ $accessions } ) . "'";
+    #my $accessions4query = "'" . join( "', '", @{ $accessions } ) . "'";
 
     my $query = "
         SELECT distinct EXPERIMENT_ACCESSION, VALUE FROM SCXA_CELL_GROUP
-        WHERE EXPERIMENT_ACCESSION=($accessions) and 
-        VARIABLE like '%cell%' and VALUE !='Not available'";
+       WHERE VARIABLE like '%cell%' and VALUE !='Not available'";
 
     # Get the database handle.
     my $atlasDBH = $self->get_dbh
@@ -56,25 +55,34 @@ sub fetch_experiment_celltypes_from_sc_atlasdb {
 
     # Empty hash for the results.
     my $expAcc2celltypes = {};
-
+    my $expCellTypes = [];
+    my $expAcc;
+    my $celltypes;
+    use Data::Dumper;
     # Go through the results and get the accessions and values.
     while( my $row = $atlasSH->fetchrow_arrayref ) {
 
-        my ( $expAcc, $expCellTypes ) = @{ $row };
+        ($expAcc, $celltypes) = @{ $row }; 
 
-        $expAcc2celltypes->{ $expAcc } = $expCellTypes;
+        unless( exists( $expAcc2celltypes->{ $expAcc } ) ) {
+
+                $expAcc2celltypes->{ $expAcc } = [ $celltypes ];
+        }
+        else {
+            push @{ $expAcc2celltypes->{ $expAcc } }, $celltypes;
+        } 
+              
     }
-
+    
     # Disconnect from the database.
     $atlasSH->finish;
-
     $logger->info( "Query successful." );
 
     return $expAcc2celltypes;
 }
 
 
-sub fetch_last_processing_dates_from_sc_atlasdb {
+sub fetch_collections_from_sc_atlasdb {
 
     my ( $self, $accessions, $logger ) = @_;
 
@@ -184,21 +192,25 @@ sub fetch_experiments_collections_from_sc_atlasdb {
     $atlasSH->execute or $logger->logdie( "Could not execute query: ", $atlasSH->errstr );
 
     my $expAcc2collections = {};
-
+    my $expCellTypes = [];
+    my $expAcc;
+    my $collection;
+    use Data::Dumper;
+    # Go through the results and get the accessions and values.
     while( my $row = $atlasSH->fetchrow_arrayref ) {
 
-        my ( $expAcc, $collectionString ) =  @{ $row };
+        ($expAcc, $collection) = @{ $row };
 
-        my $collections = [];
+        unless( exists( $expAcc2collections->{ $expAcc } ) ) {
 
-        if( $collectionString ) {
-            my @splitString = split( ", ", $collectionString );
-
-            push @{ $collections }, @splitString;
+                $expAcc2collections->{ $expAcc } = [ $collection ];
+        }
+        else {
+            push @{ $expAcc2collections->{ $expAcc } }, $collection;
         }
 
-        $expAcc2collections->{ $expAcc } = $collections;
     }
+
 
     $atlasSH->finish;
 
