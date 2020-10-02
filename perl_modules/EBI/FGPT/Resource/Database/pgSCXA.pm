@@ -53,10 +53,9 @@ sub fetch_experiment_celltypes_from_sc_atlasdb {
 
     # Empty hash for the results.
     my $expAcc2celltypes = {};
-    my $expCellTypes = [];
     my $expAcc;
     my $celltypes;
-    use Data::Dumper;
+
     # Go through the results and get the accessions and values.
     while( my $row = $atlasSH->fetchrow_arrayref ) {
 
@@ -147,10 +146,9 @@ sub fetch_experiments_collections_from_sc_atlasdb {
     $atlasSH->execute or $logger->logdie( "Could not execute query: ", $atlasSH->errstr );
 
     my $expAcc2collections = {};
-    my $expCellTypes = [];
     my $expAcc;
     my $collection;
-    
+
     # Go through the results and get the accessions and values.
     while( my $row = $atlasSH->fetchrow_arrayref ) {
 
