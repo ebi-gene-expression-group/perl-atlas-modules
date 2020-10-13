@@ -172,5 +172,48 @@ sub fetch_experiments_collections_from_sc_atlasdb {
     return $expAcc2collections;
 }
 
+sub fetch_experiment_genes_from_sc_atlasdb {
+
+    my ( $self, $logger ) = @_;
+
+    my $query = "
+        SELECT distinct gene_id from scxa_cell_group_marker_gene_stats WHERE mean_expression >="."'$ENV{'CPM_THRESHOLD'}'"."and expression_type='0'
+        UNION
+        SELECT distinct gene_id from scxa_cell_group_marker_gene_stats WHERE mean_expression >="."'$ENV{'TPM_THRESHOLD'}'"."and expression_type='1' ORDER BY gene_id";
+
+    my $atlasDBH = $self->get_dbh;
+
+    $logger->info( "Querying SC Atlas database for gene information..." );
+
+    # Get statement handle by preparing query.
+    my $atlasSH = $atlasDBH->prepare( $query )
+        or $logger->logdie( "Could not prepare query: ", $atlasDBH->errstr );
+
+    # Execute the query.
+    $atlasSH->execute or $logger->logdie( "Could not execute query: ", $atlasSH->errstr );
+
+    my $gene2collections = [];
+    my $gene;
+
+    # Go through the results and get the accessions and values.
+    while( my $row = $atlasSH->fetchrow_arrayref ) {
+
+        ($gene) = @{ $row };
+
+        if ( $gene )  {
+
+            push @{ $gene2collections }, $gene;
+        }
+
+    }
+
+
+    $atlasSH->finish;
+
+    $logger->info( "Query successful." );
+
+    return $gene2collections;
+}
 
 1;
+
