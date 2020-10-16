@@ -79,53 +79,6 @@ sub fetch_experiment_celltypes_from_sc_atlasdb {
 }
 
 
-
-sub fetch_pmids_from_sc_atlasdb {
-
-    my ( $self, $accessions, $logger ) = @_;
-
-    my $accessions4query = "'" . join( "', '", @{ $accessions } ) . "'";
-
-    my $query = "select ACCESSION, PUBMED_IDS from EXPERIMENT where ACCESSION in ($accessions4query)";
-
-    my $atlasDBH = $self->get_dbh
-        or $logger->logdie( "Could not get database handle: $DBI::errstr" );
-
-    $logger->info( "Querying SC Atlas database for PubMed IDs..." );
-
-    # Get statement handle by preparing query.
-    my $atlasSH = $atlasDBH->prepare( $query )
-        or $logger->logdie( "Could not prepare query: ", $atlasDBH->errstr );
-
-    # Execute the query.
-    $atlasSH->execute or $logger->logdie( "Could not execute query: ", $atlasSH->errstr );
-
-    my $expAcc2pmids = {};
-
-    while( my $row = $atlasSH->fetchrow_arrayref ) {
-
-        my ( $expAcc, $pmidString ) =  @{ $row };
-
-        my $pmids = [];
-
-        if( $pmidString ) {
-            my @splitString = split( ", ", $pmidString );
-
-            push @{ $pmids }, @splitString;
-        }
-
-        $expAcc2pmids->{ $expAcc } = $pmids;
-    }
-
-    $atlasSH->finish;
-
-    $logger->info( "Query successful." );
-
-    return $expAcc2pmids;
-}
-
-
-
 sub fetch_experiments_collections_from_sc_atlasdb {
 
     my ( $self, $logger ) = @_;
@@ -172,14 +125,14 @@ sub fetch_experiments_collections_from_sc_atlasdb {
     return $expAcc2collections;
 }
 
+
 sub fetch_experiment_genes_from_sc_atlasdb {
 
     my ( $self, $logger ) = @_;
 
     my $query = "
-        SELECT distinct gene_id from scxa_cell_group_marker_gene_stats WHERE mean_expression >="."'$ENV{'CPM_THRESHOLD'}'"."and expression_type='0'
-        UNION
-        SELECT distinct gene_id from scxa_cell_group_marker_gene_stats WHERE mean_expression >="."'$ENV{'TPM_THRESHOLD'}'"."and expression_type='1' ORDER BY gene_id";
+        SELECT scmg.gene_id, scmg.experiment_accession, e.species, e.pubmed_ids from scxa_marker_genes scmg, experiment e WHERE scmg.experiment_accession = e.accession
+        AND scmg.marker_probability <="."'$ENV{'MARKER_GENE_PVAL'}'" ."AND e.private = 'FALSE'";
 
     my $atlasDBH = $self->get_dbh;
 
@@ -192,27 +145,24 @@ sub fetch_experiment_genes_from_sc_atlasdb {
     # Execute the query.
     $atlasSH->execute or $logger->logdie( "Could not execute query: ", $atlasSH->errstr );
 
-    my $gene2collections = [];
-    my $gene;
+    my $geneIDs2expAccs2species2pubmed_ids = {};
 
-    # Go through the results and get the accessions and values.
+    # Go through the resulting rows.
     while( my $row = $atlasSH->fetchrow_arrayref ) {
 
-        ($gene) = @{ $row };
+        # Get the gene ID, experiment accession, contrast ID, log fold-change, p-value and last update date.
+        my ( $geneID, $expAcc, $species, $pubmed_ids ) = @{ $row };
 
-        if ( $gene )  {
-
-            push @{ $gene2collections }, $gene;
-        }
-
+        # Add species and pubmed_id to the results hash.
+        $geneIDs2expAccs2species2pubmed_ids->{ $geneID }->{ $expAcc }->{ "species" } = $species;
+        $geneIDs2expAccs2species2pubmed_ids->{ $geneID }->{ $expAcc }->{ "pubmed_id" } = $pubmed_ids;
     }
-
 
     $atlasSH->finish;
 
     $logger->info( "Query successful." );
 
-    return $gene2collections;
+    return $geneIDs2expAccs2species2pubmed_ids;
 }
 
 1;
