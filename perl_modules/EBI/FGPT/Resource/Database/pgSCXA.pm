@@ -16,16 +16,14 @@ use MooseX::FollowPBP;
 
 use Encode qw( encode );
 
-use EBI::FGPT::Config qw($CONFIG);
-
 extends 'EBI::FGPT::Resource::pgDatabase';
 
 sub BUILD{
 
     my ($self) = @_;
-    $self->set_dsn( $CONFIG->get_AE_SC_PG_DSN() );
-    $self->set_username ( $CONFIG->get_AE_SC_PG_USERNAME() );
-    $self->set_password ( $CONFIG->get_AE_SC_PG_PASSWORD() );
+    $self->set_dsn( $ENV{'SC_PG_DSN'} );
+    $self->set_username ( $ENV{'SC_PG_USERNAME'} );
+    $self->set_password ( $ENV{'SC_PG_PASSWORD'} );
 
 }
 
