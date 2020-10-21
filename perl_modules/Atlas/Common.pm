@@ -45,6 +45,7 @@ use IPC::Cmd qw( can_run );
 
 use EBI::FGPT::Config qw( $CONFIG );
 use EBI::FGPT::Resource::Database::pgGXA;
+use EBI::FGPT::Resource::Database::pgSCXA;
 
 # TODO: rpetry - a hack to prevent using Postgres module on anything other than RH7 (plantain VM runs RH6 and doesn't seem to have Postgres installed)
 #my $rhVersion = `cat /etc/redhat-release | awk '{print \$7}' | awk -F'.' '{print \$1}'`;
@@ -57,6 +58,7 @@ use Atlas::Magetab4Atlas;
 use base 'Exporter';
 our @EXPORT_OK = qw(
     connect_pg_atlas
+    connect_sc_pg_atlas
 	download_atlas_details_file
 	get_atlas_contrast_details
     get_supporting_file
@@ -340,6 +342,24 @@ sub connect_pg_atlas {
     return $atlasDB;
 }
 
+=item connect_sc_pg_atlas
+
+Create a connection to the postgres Atlas database.
+
+=cut
+
+sub connect_sc_pg_atlas {
+
+    $logger->info( "Connecting to SC pg Atlas database..." );
+
+    # Connect to Atlas database.
+    my $atlasDB = EBI::FGPT::Resource::Database::pgSCXA->new
+        or $logger->logdie( "Could not connect to SC pg Atlas database: $DBI::errstr" );
+
+    $logger->info( "Connected OK." );
+
+    return $atlasDB;
+}
 
 =item make_http_request
 
