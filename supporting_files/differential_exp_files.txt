@@ -1,0 +1,13 @@
+-analysis-methods.tsv
+-mvaPlot.png
+-configuration.xml
+-atlasExperimentSummary.Rdata
+-analytics.tsv
+-percentile-ranks.tsv
+.gsea_list.tsv
+.gsea.tsv
+.png
+.pval.bedGraph
+.log2foldchange.bedGraph
+.idf.txt
+.condensed-sdrf.tsv
