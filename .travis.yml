@@ -43,6 +43,7 @@ install:
   - conda install --yes -c eumetsat perl-dbd-oracle
   - conda install --yes -c bioconda perl-clone
   - conda install --yes -c bioconda perl-mime-lite
+  - conda install --yes -c bioconda perl-dbd-mysql
   - cpanm IO::CaptureOutput Class::DBI
 
 before_script:
