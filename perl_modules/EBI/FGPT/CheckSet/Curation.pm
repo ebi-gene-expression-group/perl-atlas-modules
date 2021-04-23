@@ -14,16 +14,16 @@
 EBI::FGPT::CheckSet::Curation
 
 =head1 SYNOPSIS
- 
+
  use EBI::FGPT;
- 
+
  my $check_sets = {
 	'EBI::FGPT::CheckSet::Curation'  => 'curator_checks',
  };
 
  my $idf = $ARGV[0];
- my $checker = EBI::FGPT::Reader::MAGETAB->new( 
-    'idf'                  => $idf, 
+ my $checker = EBI::FGPT::Reader::MAGETAB->new(
+    'idf'                  => $idf,
     'check_sets'           => $check_sets,
  );
  $checker->parse();
@@ -573,22 +573,23 @@ sub check_for_previously_loaded_files {
 		my $actual_md5 = $md5->hexdigest();
 
 		# Connect to AE to check MD5
-		my $ae_db    = EBI::FGPT::Resource::Database::ArrayExpress->new();
-		my $md5_info = $ae_db->check_md5_in_database($actual_md5);
-		my @md5_info = @{$md5_info};
-
-		if (@md5_info) {
-			foreach my $ae_md5_info (@md5_info) {
-				my @ae_md5_info = @{$ae_md5_info};
-				my $accs        = $ae_md5_info[0];
-				$accs =~ s/\\.+//g;
-				my $ae_file_name = $ae_md5_info[1];
-				my $ae_md5       = $ae_md5_info[2];
-				$self->warn(
-"$name has been previously loaded for experiment: $accs with name $ae_file_name"
-				);
-			}
-		}
+		# Check removed for unglue
+# 		my $ae_db    = EBI::FGPT::Resource::Database::ArrayExpress->new();
+# 		my $md5_info = $ae_db->check_md5_in_database($actual_md5);
+# 		my @md5_info = @{$md5_info};
+#
+# 		if (@md5_info) {
+# 			foreach my $ae_md5_info (@md5_info) {
+# 				my @ae_md5_info = @{$ae_md5_info};
+# 				my $accs        = $ae_md5_info[0];
+# 				$accs =~ s/\\.+//g;
+# 				my $ae_file_name = $ae_md5_info[1];
+# 				my $ae_md5       = $ae_md5_info[2];
+# 				$self->warn(
+# "$name has been previously loaded for experiment: $accs with name $ae_file_name"
+# 				);
+# 			}
+# 		}
 
 	}    # End checking of files
 
@@ -677,17 +678,17 @@ sub run_data_checks {
 		}
 
 		# Skip checking Illumina BeadChip files
-
-		my $ae_db = EBI::FGPT::Resource::Database::ArrayExpress->new();
-		my $array_design_name =
-		  $ae_db->get_array_design_name_by_acc( $file->{array} )
-		  if ($ae_db);
-		if ( ($array_design_name) && ( $array_design_name =~ /Illumina/ ) ) {
-			$self->warn(
-"Recognised Illumina array using ADF name \'$array_design_name\', skipping checking file "
-				  . $file->{name} );
-			next;
-		}
+		# Check removed for unglue
+# 		my $ae_db = EBI::FGPT::Resource::Database::ArrayExpress->new();
+# 		my $array_design_name =
+# 		  $ae_db->get_array_design_name_by_acc( $file->{array} )
+# 		  if ($ae_db);
+# 		if ( ($array_design_name) && ( $array_design_name =~ /Illumina/ ) ) {
+# 			$self->warn(
+# "Recognised Illumina array using ADF name \'$array_design_name\', skipping checking file "
+# 				  . $file->{name} );
+# 			next;
+# 		}
 
 		# Now we've discarded the corner cases, get some actual
 		# information from the file.
@@ -1231,19 +1232,19 @@ sub check_features_match_array {
 			$self->add_missing_features( \%feature_info );
 		}
 	}
-
-	elsif ( !$identifiers && $acc =~ /^A-GEOD-/ ) {
-
-# getting ADF name from DB and not from parsed ADF, in case ADF parsing failed and parser is undef
-
-		my $ae_db    = EBI::FGPT::Resource::Database::ArrayExpress->new();
-		my $adf_name = $ae_db->get_array_design_name_by_acc($acc);
-		$self->warn(
-			"No $heading found for GEO array $acc ($adf_name), ",
-			"skipping identifier checks for file ",
-			$file->get_name
-		);
-	}
+	# Check removed for unglue
+# 	elsif ( !$identifiers && $acc =~ /^A-GEOD-/ ) {
+#
+# # getting ADF name from DB and not from parsed ADF, in case ADF parsing failed and parser is undef
+#
+# 		my $ae_db    = EBI::FGPT::Resource::Database::ArrayExpress->new();
+# 		my $adf_name = $ae_db->get_array_design_name_by_acc($acc);
+# 		$self->warn(
+# 			"No $heading found for GEO array $acc ($adf_name), ",
+# 			"skipping identifier checks for file ",
+# 			$file->get_name
+# 		);
+# 	}
 
 	else {
 		$self->error(
