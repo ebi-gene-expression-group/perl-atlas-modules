@@ -308,7 +308,7 @@ sub check_compressed_file_integrity {
 		$is_seq = grep { $_ =~ /sequencing/i } @tech_types;
 
 		if ( $is_seq and ( $type eq "raw" ) ) {
-			$self->warn( "Skipping compression check for",
+			$self->info( "Skipping compression check for",
 				$name . " (assuming it is sequencing data)" );
 			next;
 		}
@@ -424,7 +424,7 @@ sub run_data_md5_check {
 		  grep { $_ and $_->get_name eq "MD5" } $file->get_comments;
 
 		if ( $is_seq and ( $type eq "raw" ) ) {
-			$self->warn( "Skipping MD5 checks for ",
+			$self->info( "Skipping MD5 checks for ",
 				$name . " (assuming it is sequencing data)" );
 
 			# Should throw error if no MD5s provided by submitter
