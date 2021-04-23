@@ -1116,20 +1116,7 @@ sub check_features_match_array {
 			$self->add_missing_features( \%feature_info );
 		}
 	}
-	# Check removed for unglue
-# 	elsif ( !$identifiers && $acc =~ /^A-GEOD-/ ) {
-#
-# # getting ADF name from DB and not from parsed ADF, in case ADF parsing failed and parser is undef
-#
-# 		my $ae_db    = EBI::FGPT::Resource::Database::ArrayExpress->new();
-# 		my $adf_name = $ae_db->get_array_design_name_by_acc($acc);
-# 		$self->warn(
-# 			"No $heading found for GEO array $acc ($adf_name), ",
-# 			"skipping identifier checks for file ",
-# 			$file->get_name
-# 		);
-# 	}
-
+	
 	else {
 		$self->error(
 			"No $heading found for array $acc, ",
