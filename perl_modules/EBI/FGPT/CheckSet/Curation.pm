@@ -564,17 +564,15 @@ sub run_data_checks {
 		}
 
 		# Skip checking Illumina BeadChip files
-		# Check removed for unglue
-# 		my $ae_db = EBI::FGPT::Resource::Database::ArrayExpress->new();
-# 		my $array_design_name =
-# 		  $ae_db->get_array_design_name_by_acc( $file->{array} )
-# 		  if ($ae_db);
-# 		if ( ($array_design_name) && ( $array_design_name =~ /Illumina/ ) ) {
-# 			$self->warn(
-# "Recognised Illumina array using ADF name \'$array_design_name\', skipping checking file "
-# 				  . $file->{name} );
-# 			next;
-# 		}
+
+		my $array_design_name = $self->get_ae_rest->get_array_design_name( $file->{array} );
+
+		if ( ($array_design_name ) && ( $array_design_name =~ /Illumina/ ) ) {
+			$self->warn(
+"Recognised Illumina array using ADF name \'$array_design_name\', skipping checking file "
+				  . $file->{name} );
+			next;
+		}
 
 		# Now we've discarded the corner cases, get some actual
 		# information from the file.
