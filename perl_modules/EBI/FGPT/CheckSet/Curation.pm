@@ -87,8 +87,6 @@ MD5, compression checks and previously loaded file checks are only run on non-ma
 
 For files with a Comment[MD5] their actual MD5 sum must match that specified (ERROR)
 
-File MD5 is checked against those stored in AE to check for previously loaded (WARN)
-
 The following checks are only run on files which are assoicated with an array design:
 
 Affymetrix CHP file must be listed as Derived data (ERROR)
@@ -107,7 +105,7 @@ If file contains exactly 65535 rows it may have been truncated by old version of
 
 All design elements in the file must be described on the array design (ERROR)
 
-We skip MD5, compression checks and previously loaded file checks for raw seq files
+We skip MD5, compression checks for raw seq files
 
 =cut
 
@@ -227,7 +225,6 @@ augment 'run_sdrf_checks' => sub {
 	# Only run on non-matrix files
 	$self->run_data_md5_check();
 	$self->check_compressed_file_integrity();
-	$self->check_for_previously_loaded_files();
 
 	$self->check_for_derived_data();
 };
@@ -483,117 +480,6 @@ sub run_data_md5_check {
 	}
 }
 
-sub check_for_previously_loaded_files {
-	my ($self) = @_;
-
-	if ( $self->get_skip_data_checks ) {
-		$self->warn("Skipping check for previously loaded files");
-		return;
-	}
-
-	# MD5 of loaded files is stored in AE data table
-	foreach my $file ( $self->get_magetab->get_dataFiles ) {
-		my ( $path, $name ) = $self->_get_file_path($file);
-
-		# Ignore raw seq files, to do this we determine if assay
-		# attached to file has technology type "sequencing"
-
-		my $type       = $file->get_dataType->get_value;
-		my @inputEdges = $file->get_inputEdges;
-		my $assay;
-		my @tech_types;
-
-		# Store technology type associated with raw file
-		if ( $type eq "raw" ) {
-			foreach my $inputEdge (@inputEdges) {
-
-				# If file input is an assay get technology type
-				if ( $inputEdge->get_inputNode->isa("Bio::MAGETAB::Assay") ) {
-					$assay = $inputEdge->get_inputNode;
-					push @tech_types, $assay->get_technologyType->get_value;
-				}
-
-				# If file input is a scan
-				elsif (
-					$inputEdge->get_inputNode->isa(
-						"Bio::MAGETAB::DataAcquisition")
-				  )
-				{
-
-					my $scan      = $inputEdge->get_inputNode;
-					my @scanEdges = $scan->get_inputEdges;
-
-					foreach my $scanEdge (@scanEdges) {
-						if (
-							$scanEdge->get_inputNode->isa(
-								"Bio::MAGETAB::Assay")
-						  )
-						{
-							$assay = $scanEdge->get_inputNode;
-							push @tech_types,
-							  $assay->get_technologyType->get_value;
-						}
-					}
-				}
-
-				else {
-					$self->warn(
-						"Cannot determine technology type for " . $name );
-				}
-
-			}
-		}
-
-		my $is_seq;
-		$is_seq = grep { $_ =~ /sequencing/i } @tech_types;
-
-		if ( $is_seq and ( $type eq "raw" ) ) {
-			$self->warn(
-				"Skipping previously loaded file check for",
-				$name . " (assuming it is sequencing data)"
-			);
-			next;
-		}
-
-		open( my $fh, "<", $path )
-		  or (
-			$self->error(
-				"Could not open $path to check for previously loaded files"),
-			next
-		  );
-
-		my $md5 = Digest::MD5->new();
-		my $chunk;
-		my $chunksize =
-		  65536;    # 64k for reasonable efficiency (untested though).
-		while ( my $bytes = read( $fh, $chunk, $chunksize ) ) {
-			$md5->add($chunk);
-		}
-
-		my $actual_md5 = $md5->hexdigest();
-
-		# Connect to AE to check MD5
-		# Check removed for unglue
-# 		my $ae_db    = EBI::FGPT::Resource::Database::ArrayExpress->new();
-# 		my $md5_info = $ae_db->check_md5_in_database($actual_md5);
-# 		my @md5_info = @{$md5_info};
-#
-# 		if (@md5_info) {
-# 			foreach my $ae_md5_info (@md5_info) {
-# 				my @ae_md5_info = @{$ae_md5_info};
-# 				my $accs        = $ae_md5_info[0];
-# 				$accs =~ s/\\.+//g;
-# 				my $ae_file_name = $ae_md5_info[1];
-# 				my $ae_md5       = $ae_md5_info[2];
-# 				$self->warn(
-# "$name has been previously loaded for experiment: $accs with name $ae_file_name"
-# 				);
-# 			}
-# 		}
-
-	}    # End checking of files
-
-}
 
 sub _get_file_path {
 
