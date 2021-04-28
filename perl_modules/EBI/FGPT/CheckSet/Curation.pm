@@ -1116,7 +1116,15 @@ sub check_features_match_array {
 			$self->add_missing_features( \%feature_info );
 		}
 	}
-	
+
+	elsif ( !$identifiers && $acc =~ /^A-GEOD-/ ) {
+		$self->warn(
+			"No $heading found for GEO array $acc, ",
+			"skipping identifier checks for file ",
+			$file->get_name
+		);
+	}
+
 	else {
 		$self->error(
 			"No $heading found for array $acc, ",
