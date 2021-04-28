@@ -75,7 +75,7 @@ sub get_array_design_name{
 sub get_affy_design_id{
 
 	my ($self, $acc) = @_;
-			print($acc);
+
 	my $name = $self->get_array_design_name($acc);
 
 	if ($name){
