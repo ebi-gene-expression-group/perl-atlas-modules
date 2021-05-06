@@ -78,6 +78,7 @@ VALIDATION_SCRIPT:
 # Location of ADF and Experiments checked in Atlas.pm
 ADF_CHECKED_LIST:        /nfs/production3/ma/home/atlas3-production/sw/configs/adfs_not_in_atlas.txt
 ATLAS_EXPT_CHECKED_LIST: /nfs/production3/ma/home/atlas3-production/sw/configs/expts_checked_for_atlas.txt
+SKIP_CHECKED_LIST_FILES:  true
 
 PRIVATE_ADF_USERNAME:    xxxx
 PRIVATE_ADF_PASSWORD:    xxxxx
