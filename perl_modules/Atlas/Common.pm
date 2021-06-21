@@ -96,28 +96,32 @@ Find where the supporting_files folder is
 
 =cut
 sub _build_supporting_files_path {
-    # Deduce the path to the config file from the path to this module.
-    # This module's location on the filesystem.
-    my $thisModulePath = __FILE__;
+    
+    my $result = $ENV{'ATLAS_META_CONFIG'};
+    if(! defined $result){
+        # Deduce the path to the config file from the path to this module.
+        # This module's location on the filesystem.
+        my $thisModulePath = __FILE__;
 
-    # The directory this module occupies.
-    my $thisModuleDir = dirname( $thisModulePath );
+        # The directory this module occupies.
+        my $thisModuleDir = dirname( $thisModulePath );
 
-    # First split the directories we have.
-    my @directories = File::Spec->splitdir( $thisModuleDir );
+        # First split the directories we have.
+        my @directories = File::Spec->splitdir( $thisModuleDir );
 
-    # Get up to the atlasprod directory.
-    while( $directories[ -1 ] ne "atlasprod" ) {
-        pop @directories;
+        # Get up to the atlasprod directory.
+        while( $directories[ -1 ] ne "atlasprod" ) {
+            pop @directories;
 
-        unless( @directories ) {
-            die "ERROR - Cannot find atlasprod directory in path to Atlas::Common. Please ensure this module is installed under atlasprod.\n";
+            unless( @directories ) {
+                die "ERROR - Cannot find atlasprod directory in path to Atlas::Common. Please ensure this module is installed under atlasprod.\n";
+            }
         }
-    }
 
-    # Stick the remaining directories back together, now pointing to atlasprod directory.
-    # Check that the supporting_files dir is in the dir now in $atlasprodDir.
-    my $result = File::Spec->catfile( @directories, "supporting_files" );
+        # Stick the remaining directories back together, now pointing to atlasprod directory.
+        # Check that the supporting_files dir is in the dir now in $atlasprodDir.
+        $result = File::Spec->catfile( @directories, "supporting_files" );
+    }
 
     unless( -d $result ) {
         die "ERROR - Cannot find $result -- cannot locate site config.\n";
