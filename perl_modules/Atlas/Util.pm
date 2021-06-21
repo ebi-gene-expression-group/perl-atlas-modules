@@ -27,6 +27,8 @@ package Atlas::Util;
 
 use 5.10.0;
 
+use File::Basename;
+
 use base 'Exporter';
 our @EXPORT_OK = qw(
     get_supporting_file
