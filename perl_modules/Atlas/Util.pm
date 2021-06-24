@@ -114,7 +114,7 @@ sub get_supporting_file {
     if ( ! -r $result ){
         my $module_supporting_file_dir = _build_module_supporting_files_path();
         my $result_template = File::Spec->catfile(
-            $module_supporting_files_dir,
+            $module_supporting_file_dir,
             "${file_name}.default"
         );
 
