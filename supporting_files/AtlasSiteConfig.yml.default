@@ -1,0 +1,205 @@
+---
+# This file contains config for variables used by Expression Atlas code.
+
+# Test or prod?
+atlasinstall:   prod
+
+# annotare import
+arrayexpress_experiment_load_dir: /ebi/microarray/home/arrayexpress/ae2_production/data/EXPERIMENT
+
+# geo import 
+geo_experiment_load_dir: /GEO_import
+
+# single cell geo import
+geo_sc_experiment_load_dir: /singlecell/experiment
+
+# ena import
+ena_experiment_load_dir: /ENA_import
+
+# single cell ena import
+ena_sc_experiment_load_dir: /singlecell/experiment
+    
+
+#File containing factor values to use as references in differential
+# experiments and factor types to ignore.
+references_ignore_file:     sw/atlasinstall_prod/atlasprod/analysis/differential/mapped_reference_assay_group_factor_values.xml
+
+# Allowed experiment types in XML configuration file.
+allowed_xml_experiment_types: 
+    - microarray_1colour_mrna_differential
+    - microarray_2colour_mrna_differential
+    - microarray_1colour_microrna_differential
+    - rnaseq_mrna_differential
+    - rnaseq_mrna_baseline
+    - proteomics_baseline
+    - proteomics_differential
+
+# Allowed data usage agreements for factors XML configuration file.
+allowed_data_usage_agreements:
+    - fortLauderdale
+    - zebrafish
+ 
+# Ensembl gene mappings directory.
+bioentity_properties_ensembl: bioentity_properties/ensembl
+# WBPS gene mappings directory.
+bioentity_properties_wbps: bioentity_properties/wbps
+
+# Directory containing files mapping probes on ArrayExpress array designs to
+# miRBase accessions.
+mirbase_mappings_directory: bioentity_properties/mirbase
+
+# miRNA array design accessions.
+mirna_array_design_accessions:
+    - A-GEOD-6955
+    - A-MEXP-1551
+    - A-MEXP-1663
+
+# Location to write miRBase mappings to.
+mirbase_mappings_write_directory: arraydesigns/microRNA
+
+# URL base for ArrayExpress files.
+array_designs_ftp_site: /net/nasP/ftp_public/databases/microarray/data/array
+
+# File mapping abbreviations used for species in miRBase.
+mirbase_species_abbreviations: bioentity_properties/mirbase/idprefix_to_organism.tsv
+
+# File containing contrast details.
+contrast_details_url: http://wwwdev.ebi.ac.uk/gxa/api/contrastdetails.tsv
+
+# File containing mappings of property types to EFO URIs.
+property_types_efo_mappings: sw/atlasinstall_prod/atlasprod/db/scripts/property_types_efo_mappings.tsv
+
+# Directory where Ensembl annotation source files live.
+annotation_source_dir: sw/atlasinstall_prod/atlasprod/bioentity_annotations/ensembl/annsrcs
+
+# Genome references config.
+genome_references_config: sw/islinstall_prod/isl_genomes/genome_references.conf
+
+# R installation.
+atlas_r_installation: sw/atlasinstall_prod/R_install
+
+# Script for querying CTTV EFO terms.
+cttv_efo_sparql_script: sw/atlasinstall_prod/atlasprod/db/scripts/get_efo_in_cttv_validation_data.sh
+
+# File containing property types and values to exclude from Zooma mapping.
+zooma_exclusions_file: <CONDA_PREFIX>/atlasprod/supporting_files/zooma_exclusions.yml
+
+# File containing accessions of experiments that have been assessed by a curator.
+atlas_curated_accessions_file: sw/configs/atlas_curated_accessions.yml
+
+# File containing accessions of experiments that don't have R experiment summaries.
+no_r_data_accessions_file: sw/configs/no_r_object
+
+# File controllwed vocabulary for experiment types, property types, and
+# protocol names (originally in Conan database).
+aeatlas_controlled_vocab_file: <CONDA_PREFIX>/atlasprod/supporting_files/ae_atlas_controlled_vocabulary.yml
+
+# URL to get ADF info from ArrayExpress.
+arrayexpress_adf_info_url: http://peach.ebi.ac.uk:8480/api/array.txt?acc=
+
+# URL to get privacy info from ArrayExpress
+arrayexpress_privacy_info_url: http://peach.ebi.ac.uk:8480/api/privacy.txt?acc=
+
+# Script for getting iRAP single-lib results.
+#isl_results_script: sw/islinstall_prod/isl/db/scripts/findCRAMFiles.sh
+isl_results_script: software/isl/db/scripts/findCRAMFiles.sh
+
+# Script for getting info about a study in ISL.
+#isl_study_info_script: sw/islinstall_prod/isl/db/scripts/findStudy.sh
+isl_study_info_script: software/isl/db/scripts/findStudy.sh
+
+# Accessions of microarrays supported by the Atlas pipeline, plus the organism
+# targeted.
+atlas_supported_adfs:
+    A-AFFY-1: Homo sapiens
+    A-AFFY-10: Homo sapiens
+    A-AFFY-102: Anopheles gambiae
+    A-AFFY-103: Gallus gallus
+    A-AFFY-11: Homo sapiens
+    A-AFFY-12: Homo sapiens
+    A-AFFY-126: Oryza sativa
+    A-AFFY-128: Bos taurus
+    A-AFFY-13: Homo sapiens
+    A-AFFY-130: Mus musculus
+    A-AFFY-131: Populus trichocarpa
+    A-AFFY-14: Mus musculus
+    A-AFFY-141: Homo sapiens
+    A-AFFY-145: Macaca mulatta
+    A-AFFY-149: Canis familiaris
+    A-AFFY-15: Mus musculus
+    A-AFFY-154: Xenopus tropicalis
+    A-AFFY-160: Rattus norvegicus
+    A-AFFY-17: Drosophila melanogaster
+    A-AFFY-18: Rattus norvegicus
+    A-AFFY-19: Rattus norvegicus
+    A-AFFY-2: Arabidopsis thaliana
+    A-AFFY-20: Rattus norvegicus
+    A-AFFY-21: Rattus norvegicus
+    A-AFFY-22: Rattus norvegicus
+    A-AFFY-23: Mus musculus
+    A-AFFY-24: Mus musculus
+    A-AFFY-25: Rattus norvegicus
+    A-AFFY-26: Rattus norvegicus
+    A-AFFY-27: Saccharomyces cerevisiae
+    A-AFFY-3: Mus musculus
+    A-AFFY-31: Hordeum vulgare
+    A-AFFY-32: Homo sapiens
+    A-AFFY-33: Homo sapiens
+    A-AFFY-34: Homo sapiens
+    A-AFFY-35: Drosophila melanogaster
+    A-AFFY-36: Mus musculus
+    A-AFFY-37: Homo sapiens
+    A-AFFY-38: Danio rerio
+    A-AFFY-4: Mus musculus
+    A-AFFY-41: Homo sapiens
+    A-AFFY-43: Rattus norvegicus
+    A-AFFY-44: Homo sapiens
+    A-AFFY-45: Mus musculus
+    A-AFFY-47: Saccharomyces cerevisiae
+    A-AFFY-5: Mus musculus
+    A-AFFY-54: Homo sapiens
+    A-AFFY-6: Mus musculus
+    A-AFFY-60: Caenorhabditis elegans
+    A-AFFY-7: Mus musculus
+    A-AFFY-75: Sus scrofa
+    A-AFFY-77: Zea mays
+    A-AFFY-78: Vitis vinifera
+    A-AFFY-8: Mus musculus
+    A-AFFY-9: Homo sapiens
+    A-AFFY-98: Mus musculus
+    A-AFFY-99: Rattus norvegicus
+    A-AGIL-28: Homo sapiens
+    A-AGIL-30: Danio rerio
+    A-GEOD-14745: Rattus norvegicus
+    A-GEOD-6864: Oryza sativa
+    A-GEOD-6955: Homo sapiens
+    A-GEOD-74: Homo sapiens
+    A-MEXP-1551: Homo sapiens
+    A-MEXP-1663: Homo sapiens
+    A-MEXP-2050: Mus musculus
+    A-MEXP-724: Mus musculus
+    A-MEXP-2102: Homo sapiens
+    A-MEXP-2114: Mus musculus
+    A-MEXP-2183: Homo sapiens
+    A-MEXP-2218: Mus musculus
+    A-MEXP-2237: Rattus norvegicus
+    A-MEXP-2246: Homo sapiens
+    A-MEXP-784: Rattus norvegicus
+    A-GEOD-16686: Homo sapiens
+    A-GEOD-17408: Mus musculus
+    A-GEOD-16570: Mus musculus
+    A-MEXP-2320: Homo sapiens
+    A-GEOD-11534: Rattus norvegicus
+    A-MEXP-1414: Oryza sativa
+
+failed_qc_dir: /nfs/production3/ma/home/atlas3-production/failedQC
+
+min_pval_dir: /nfs/production3/ma/home/atlas3-production/minPValGt0.5
+
+failed_curation_dir: /nfs/production3/ma/home/atlas3-production/failedCuration
+
+non_standard_experiments_file: <CONDA_PREFIX>/atlasprod/supporting_files/non_standard_experiments.yml
+
+atlasprd3_dsn:    DBI:Oracle:host=ora-vm-xxx.ebi.ac.uk;sid=ATLASPRO;port=1531
+atlasprd3_user:    xxxx
+atlasprd3_pass:    xxxx
