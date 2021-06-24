@@ -90,10 +90,6 @@ atlas_curated_accessions_file: sw/configs/atlas_curated_accessions.yml
 # File containing accessions of experiments that don't have R experiment summaries.
 no_r_data_accessions_file: sw/configs/no_r_object
 
-# File controllwed vocabulary for experiment types, property types, and
-# protocol names (originally in Conan database).
-aeatlas_controlled_vocab_file: <CONDA_PREFIX>/atlasprod/supporting_files/ae_atlas_controlled_vocabulary.yml
-
 # URL to get ADF info from ArrayExpress.
 arrayexpress_adf_info_url: http://peach.ebi.ac.uk:8480/api/array.txt?acc=
 

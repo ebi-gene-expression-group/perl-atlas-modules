@@ -53,6 +53,7 @@ use Config::YAML;
 
 use Bio::MAGETAB::Util::Reader;
 use Atlas::AtlasAssayFactory;
+use Atlas::Util qw( get_supporting_file);
 
 =head1 ATTRIBUTES
 
@@ -193,7 +194,7 @@ sub add_experiment_type {
     my ($self, $magetab) = @_;
 
     #An array of AEExperimentType terms that are allowed in Atlas.
-    my $allowedAtlasExperimentTypesFile = "$abs_path/../../supporting_files/ae_atlas_controlled_vocabulary.yml";
+    my $allowedAtlasExperimentTypesFile = get_supporting_file("ae_atlas_controlled_vocabulary.yml")
     my $allowedAtlasExperimentTypes = Config::YAML->new(
              config => $allowedAtlasExperimentTypesFile
                  );
