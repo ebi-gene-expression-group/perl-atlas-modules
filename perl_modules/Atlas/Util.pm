@@ -119,7 +119,7 @@ sub get_supporting_file {
         );
 
         if ( -r $result_template ){
-            warn "$result not present, initialising from $result_template"
+            warn "$result not present, initialising from $result_template";
             copy( "${result}.default", ${result});
         }
         else {
