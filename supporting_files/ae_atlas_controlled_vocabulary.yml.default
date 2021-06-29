@@ -1,6 +1,8 @@
 ---
 # Atlas eligible experiment types.
 atlas_experiment_types:
+    - DNA-seq
+    - isolate
     - transcription profiling by array
     - microRNA profiling by array
     - antigen profiling
@@ -13,6 +15,7 @@ atlas_experiment_types:
 
 # Atlas eligible property types.
 atlas_property_types:
+    - isolate
     - disease
     - mitotic rate
     - last follow up
@@ -171,6 +174,8 @@ atlas_property_types:
 
 # ArrayExpress eligible experiment types.
 arrayexpress_experiment_types:
+    - DNA-seq
+    - isolate
     - spatial transcriptomics
     - Ribo-seq
     - ATAC-seq
