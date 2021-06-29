@@ -42,3 +42,13 @@
   echo "output = ${output}"
   [ "$status" -eq 0 ]
 }
+
+@test "[magetab-curation-scripts] Import scRNA-seq study" {
+  if [ -z ${PERL5LIB+x} ]; then
+    skip "PERL5LIB not defined"
+  fi
+
+  run cd tests/E-MTAB-9898 && validate_magetab.pl -i E-MTAB-9898.idf.txt -c
+  echo "output = ${output}"
+  [ "$status" -eq 1 ]
+}
