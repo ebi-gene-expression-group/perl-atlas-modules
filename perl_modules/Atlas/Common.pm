@@ -704,7 +704,7 @@ sub get_aeatlas_controlled_vocabulary {
 
     my $atlasProdDir = $ENV{ "ATLAS_PROD" };
 
-    my $controlledVocabFile = get_supporting_file("ae_atlas_controlled_vocabulary.yml");
+    my $controlledVocabFile = get_supporting_file("ae_atlas_controlled_vocabulary.yml")
 
     unless( -r $controlledVocabFile ) {
         die "Cannot read AE/Atlas controlled vocab file: $controlledVocabFile.\n";
