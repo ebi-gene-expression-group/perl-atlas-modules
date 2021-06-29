@@ -42,7 +42,7 @@ jobs:
           show-channel-urls: true
           use-only-tar-bz2: true
         
-      - - shell: bash -l {0}
+      - shell: bash -l {0}
         run: |
           rm -rf ${CONDA_PREFIX}/atlasprod/perl_modules
           cp -r perl_modules ${CONDA_PREFIX}/atlasprod       
