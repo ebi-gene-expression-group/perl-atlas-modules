@@ -1,5 +1,10 @@
 #!/usr/bin/env bats
 
+setup() {
+    vocab_file="$PWD/supporting_files/ae_atlas_controlled_vocabulary.yml" 
+    vocab_sed_command="sed 's/atlas_property_types:/atlas_property_types:\n    - isolate/' ${vocab_file}.default > ${vocab_file} && sed -i 's/atlas_experiment_types:/atlas_experiment_types:\n    - DNA-seq/' ${vocab_file} && sed -i 's/arrayexpress_experiment_types:/arrayexpress_experiment_types:\n    - DNA-seq/' ${vocab_file}"
+    corrected_validate_command="env ATLAS_META_CONFIG=$(dirname $vocab_file) validate_magetab.pl -i $PWD/tests/E-MTAB-9898/E-MTAB-9898.idf.txt -c"
+}
 
 @test "Check that perl is in the path" {
     run which perl
@@ -58,9 +63,9 @@
     skip "PERL5LIB not defined"
   fi
 
-  run sed "s/atlas_property_types:/atlas_property_types:\n    - isolate/" $PWD/supporting_files/ae_atlas_controlled_vocabulary.yml.default > $PWD/supporting_files/ae_atlas_controlled_vocabulary.yml && sed -i "s/arrayexpress_experiment_types:/arrayexpress_experiment_types:\n    - DNA-seq/" $PWD/supporting_files/ae_atlas_controlled_vocabulary.yml
-  echo "output = ${output}"
-  [ "$status" -eq 1 ]
+  run eval "$vocab_sed_command"
+  echo -e "Command: $vocab_sed_command\noutput = ${output}"
+  [ "$status" -eq 0 ]
 }
 
 @test "[magetab-curation-scripts] Run validate_magetab.pl (corrected MAGE-TAB)" {
@@ -68,7 +73,7 @@
     skip "PERL5LIB not defined"
   fi
 
-  run env ATLAS_META_CONFIG=$PWD/supporting_files validate_magetab.pl -i $PWD/tests/E-MTAB-9898/E-MTAB-9898.idf.txt -c
-  echo "output = ${output}"
+  run eval "$corrected_validate_command"
+  echo -e "Command: $corrected_validate_command\noutput = ${output}"
   [ "$status" -eq 0 ]
 }
