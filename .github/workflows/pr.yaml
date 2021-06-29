@@ -50,5 +50,7 @@ jobs:
           cp -r supporting_files ${CONDA_PREFIX}/atlasprod       
 
       - name: Run tests
+        env:
+          FASTQ_FILE_REPORT='http://ftp.ebi.ac.uk/pub/databases/ena/report/fastqFileReport.gz'
         run: |
           run-tests.sh
