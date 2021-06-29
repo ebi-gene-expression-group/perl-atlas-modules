@@ -43,7 +43,7 @@
   [ "$status" -eq 0 ]
 }
 
-@test "[magetab-curation-scripts] Import scRNA-seq study" {
+@test "[magetab-curation-scripts] Run validate_magetab.pl" {
   if [ -z ${PERL5LIB+x} ]; then
     skip "PERL5LIB not defined"
   fi
