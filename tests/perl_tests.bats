@@ -48,7 +48,7 @@
     skip "PERL5LIB not defined"
   fi
 
-  run cd $PWD/tests/E-MTAB-9898 && validate_magetab.pl -i E-MTAB-9898.idf.txt -c
+  run validate_magetab.pl -i $PWD/tests/E-MTAB-9898/E-MTAB-9898.idf.txt -c 
   echo "output = ${output}"
   [ "$status" -eq 1 ]
 }
