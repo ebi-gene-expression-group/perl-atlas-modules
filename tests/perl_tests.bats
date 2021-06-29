@@ -53,12 +53,22 @@
   [ "$status" -eq 1 ]
 }
 
+@test "Correct vocab YML" {
+  if [ -z ${PERL5LIB+x} ]; then
+    skip "PERL5LIB not defined"
+  fi
+
+  run sed "s/atlas_property_types:/atlas_property_types:\n    - isolate/" $PWD/supporting_files/ae_atlas_controlled_vocabulary.yml.default > $PWD/supporting_files/ae_atlas_controlled_vocabulary.yml && sed -i "s/arrayexpress_experiment_types:/arrayexpress_experiment_types:\n    - DNA-seq/" $PWD/supporting_files/ae_atlas_controlled_vocabulary.yml
+  echo "output = ${output}"
+  [ "$status" -eq 1 ]
+}
+
 @test "[magetab-curation-scripts] Run validate_magetab.pl (corrected MAGE-TAB)" {
   if [ -z ${PERL5LIB+x} ]; then
     skip "PERL5LIB not defined"
   fi
 
-  run sed -i "s/atlas_property_types:/atlas_property_types:\n    - isolate/" $CONDA_PREFIX/atlasprod/supporting_files/ae_atlas_controlled_vocabulary.yml && sed -i "s/arrayexpress_experiment_types:/arrayexpress_experiment_types:\n    - DNA-seq/" $CONDA_PREFIX/atlasprod/supporting_files/ae_atlas_controlled_vocabulary.yml && validate_magetab.pl -i $PWD/tests/E-MTAB-9898/E-MTAB-9898.idf.txt -c 
+  run env ATLAS_META_CONFIG=$PWD/supporting_files validate_magetab.pl -i $PWD/tests/E-MTAB-9898/E-MTAB-9898.idf.txt -c
   echo "output = ${output}"
   [ "$status" -eq 0 ]
 }
