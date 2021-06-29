@@ -1,5 +1,5 @@
 name: test
 dependencies:
   - bats 
-  - coreutils
+  - sed
   - magetab-curation-scripts
