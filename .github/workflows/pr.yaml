@@ -16,6 +16,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Checkout config repo
+        uses: actions/checkout@v2
+        with:
+          repository: ebi-gene-expression-group/metadata-validation-config
+          path: config
+
       - name: Add workspace to path
         run: |
           echo "${GITHUB_WORKSPACE}" >> $GITHUB_PATH
