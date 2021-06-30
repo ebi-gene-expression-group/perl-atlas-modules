@@ -43,9 +43,11 @@ use JSON::Parse qw( parse_json );
 use Array::Compare;
 use Log::Log4perl;
 use File::Basename;
-use Atlas::Common qw( make_http_request );
+use Atlas::Common qw( 
+    make_http_request
+    get_supporting_file
+ );
 use Atlas::ZoomaClient::MappingResult;
-use LWP::UserAgent;
 use HTTP::Request;
 
 =head1 ATTRIBUTES
@@ -110,6 +112,7 @@ has cutoff_proportion => (
 
 my $logger = Log::Log4perl::get_logger;
 my $ontology_lookup = zooma_ontology_lookup ("zooma_ontologies.tsv");
+my $plant_species = get_plants_species();
 
 =head1 METHODS
 
@@ -265,36 +268,27 @@ sub zooma_ontology_lookup {
 }
 
 sub get_plants_species {
-    my ( $rnaseqer_api ) = @_;
-    my $plants_query=$rnaseqer_api . '/tsv/0/getOrganisms/plants';
-    my $ua = LWP::UserAgent->new;
-    my $request = HTTP::Request->new("GET" => $plants_query);
-    my $response = $ua->request($request);
-    my @plants_species_list;
 
-    if ( $response->is_success ) {
-        my $plants_results = $response->content_ref;
-        while (my $line = <${ $plants_results }>) {
-             next if $line =~ m/ORGANISM/;
-             my @plants_species = split(/\t/,$line);
-             push (@plants_species_list, $plants_species[0])
-        }
-        return \@plants_species_list;
+    # Plants file comes from
+    # http://ftp.ebi.ac.uk/ensemblgenomes/pub/release-51/plants/species_EnsemblPlants.txt,
+    # but the Ensembl FTP is a bit unreliable, so we bundle it here. 
+    
+    my $plants_file=get_supporting_file( 'species_EnsemblPlants.txt' );    
+    open(PLANTS, $plants_file) or die("Could not open file $plants_file.");
+    my @plants_species_list;
+    foreach my $line (<PLANTS>)  { 
+        next if $line =~ m/#name/;
+        my @plants_species = split(/\t/,$line);
+        push (@plants_species_list, $plants_species[1])
     }
-    else {
-        $logger->error(
-            "Problem querying RNASeq-er API to retrieve plant species: ",
-            $response->status_line,".");
-    }
+    close(PLANTS)
+    return \@plants_species_list;
 }
 
 
 sub get_ontology_for_type {
     my ( $organism, $property_type ) = @_;
 
-    # get plants gxa species from RNASeq-er API
-    my $rnaseqer_api='https://www.ebi.ac.uk/fg/rnaseq/api';
-    my $plant_species=get_plants_species( $rnaseqer_api ) ;
     my $ontology;
     ## for plants specific
     if (grep { $_ =~ $organism } @{ $plant_species }) {
