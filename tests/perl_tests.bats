@@ -77,3 +77,9 @@ setup() {
   echo -e "Command: $corrected_validate_command\noutput = ${output}"
   [ "$status" -eq 0 ]
 }
+
+@test "[atlas-experiment-metadata] Run condense_sdrf.pl" {
+
+  run condense_sdrf.pl -z -e E-MTAB-9898 -fi $PWD/tests/E-MTAB-9898/E-MTAB-9898.idf.txt -o $PWD
+  [ "$status" -eq 0 ]
+}

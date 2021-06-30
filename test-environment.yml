@@ -3,3 +3,4 @@ dependencies:
   - bats 
   - sed
   - magetab-curation-scripts
+  - atlas-experiment-metadata
