@@ -109,6 +109,7 @@ has cutoff_proportion => (
 =cut
 
 my $logger = Log::Log4perl::get_logger;
+my $ontology_lookup = zooma_ontology_lookup ("zooma_ontologies.tsv");
 
 =head1 METHODS
 
@@ -200,8 +201,7 @@ sub _query_zooma {
     # format for a URL.
     $_ = url_encode_utf8( $_ ) for ( $propertyType4url, $propertyValue4url );
 
-    my $ontology_lookup = zooma_ontology_lookup ("zooma_ontologies.tsv");
-    my $ontology = lc ( get_ontology_for_type( $ontology_lookup, $organism, $propertyType ) );
+    my $ontology = lc ( get_ontology_for_type( $organism, $propertyType ) );
     $ontology =~ s/\s+$//;
     
     # Get the data sources string.
@@ -290,7 +290,7 @@ sub get_plants_species {
 
 
 sub get_ontology_for_type {
-    my ( $ontology_lookup, $organism, $property_type ) = @_;
+    my ( $organism, $property_type ) = @_;
 
     # get plants gxa species from RNASeq-er API
     my $rnaseqer_api='https://www.ebi.ac.uk/fg/rnaseq/api';
