@@ -30,6 +30,11 @@ jobs:
           path: ~/conda_pkgs_dir
           key:
             ${{ matrix.os }}-conda-${{ env.CACHE_NUMBER }}-${{hashFiles('test-environment.yml') }}
+    
+      # We use conda to install magetab-curation-scripts, which will also
+      # install perl-atlas-modules and grab all the dependencies for us. Then
+      # we just copy the perl modules and supporting files to overwrite the
+      # installed ones for testing of the current codebase.  
       
       - uses: conda-incubator/setup-miniconda@v2
         with:
