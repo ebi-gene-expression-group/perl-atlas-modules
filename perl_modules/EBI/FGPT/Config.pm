@@ -19,6 +19,7 @@ use Readonly;
 use File::Spec;
 use File::Basename;
 use Carp;
+use Atlas::Util qw( get_supporting_file);
 
 use base 'Exporter';
 our @EXPORT_OK = qw($CONFIG);
@@ -230,35 +231,8 @@ if ( $ENV{HOME} ) {
 # Returns full path to YAML file containing site config.
 sub _build_yaml_file_path {
 
-    # Deduce the path to the config file from the path to this module.
-    # This module's location on the filesystem.
-    my $thisModulePath = __FILE__;
-
-    # The directory this module occupies.
-    my $thisModuleDir = dirname( $thisModulePath );
-    
-    # Split the directory names.
-    my @directories = File::Spec->splitdir( $thisModuleDir );
-    
-    # Get up to the atlasprod directory.
-    while( $directories[ -1 ] ne "atlasprod" ) {
-        pop @directories;
-
-        unless( @directories ) {
-            die "ERROR - Cannot find atlasprod directory in path to EBI::FGPT::Config. Please ensure this module is installed under atlasprod.\n";
-        }
-    }
-    
-    # Stick the remaining directories back together, now pointing to atlasprod dir.
-    my $atlasprodDir = File::Spec->catdir( @directories );
-
-    # Check that the supporting_files dir is in the dir now in $atlasprodDir.
-    unless( -d File::Spec->catdir( $atlasprodDir, "supporting_files" ) ) {
-        die "ERROR - Cannot find supporting_files directory in $atlasprodDir -- cannot locate ArrayExpress site config.\n";
-    }
-
     # Otherwise, create path to site config.
-    my $siteConfigPath = File::Spec->catfile( $atlasprodDir, "supporting_files", "ArrayExpressSiteConfig.yml" );
+    my $siteConfigPath = get_supporting_file("ArrayExpressSiteConfig.yml");
 
     # Check that the file exists and is readable.
     unless( -r $siteConfigPath ) {
