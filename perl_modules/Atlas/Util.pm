@@ -120,7 +120,7 @@ sub get_supporting_file {
 
         if ( -r $result_template ){
             warn "$result not present, initialising from $result_template";
-            copy( "${result}.default", ${result});
+            copy( ${result_template}, ${result});
         }
         else {
             die "ERROR - Cannot read supporting file: $result or default $result_template -- please check it exists and is readable by your user ID.\n";

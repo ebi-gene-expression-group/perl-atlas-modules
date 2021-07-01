@@ -1,9 +1,11 @@
 #!/usr/bin/env bats
 
 setup() {
-    vocab_file="$PWD/supporting_files/ae_atlas_controlled_vocabulary.yml" 
-    vocab_sed_command="sed 's/atlas_property_types:/atlas_property_types:\n    - isolate/' ${vocab_file}.default > ${vocab_file} && sed -i 's/atlas_experiment_types:/atlas_experiment_types:\n    - DNA-seq/' ${vocab_file} && sed -i 's/arrayexpress_experiment_types:/arrayexpress_experiment_types:\n    - DNA-seq/' ${vocab_file}"
-    corrected_validate_command="env ATLAS_META_CONFIG=$(dirname $vocab_file) validate_magetab.pl -i $PWD/tests/E-MTAB-9898/E-MTAB-9898.idf.txt -c"
+    vocab_filename=ae_atlas_controlled_vocabulary.yml
+    vocab_file="$PWD/supporting_files/${vocab_filename}" 
+    corrected_vocab_file="$PWD/$vocab_filename" 
+    vocab_sed_command="sed 's/atlas_property_types:/atlas_property_types:\n    - isolate/' ${vocab_file}.default > ${corrected_vocab_file} && sed -i 's/atlas_experiment_types:/atlas_experiment_types:\n    - DNA-seq/' ${corrected_vocab_file} && sed -i 's/arrayexpress_experiment_types:/arrayexpress_experiment_types:\n    - DNA-seq/' ${corrected_vocab_file}"
+    corrected_validate_command="env ATLAS_META_CONFIG=$PWD validate_magetab.pl -i $PWD/tests/E-MTAB-9898/E-MTAB-9898.idf.txt -c"
 }
 
 @test "Check that perl is in the path" {
@@ -65,6 +67,16 @@ setup() {
 
   run eval "$vocab_sed_command"
   echo -e "Command: $vocab_sed_command\noutput = ${output}"
+  [ "$status" -eq 0 ]
+}
+
+@test "[magetab-curation-scripts] Run check_atlas_eligibility.pl" {
+  if [ -z ${PERL5LIB+x} ]; then
+    skip "PERL5LIB not defined"
+  fi
+
+  run env ATLAS_META_CONFIG=$PWD check_atlas_eligibility.pl -i $PWD/tests/E-MTAB-9898/E-MTAB-9898.idf.txt
+  echo -e "output = ${output}"
   [ "$status" -eq 0 ]
 }
 
