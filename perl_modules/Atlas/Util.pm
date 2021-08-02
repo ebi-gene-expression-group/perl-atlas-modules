@@ -129,7 +129,7 @@ sub get_supporting_file {
     # supporting files dir).
  
     if ( ! -r $result ){
-        my $result_template = "${result}.default"   
+        my $result_template = "${result}.default";   
         if ( -r $result_template ){
             warn "$result not present, initialising from $result_template";
             copy( ${result_template}, ${result});
