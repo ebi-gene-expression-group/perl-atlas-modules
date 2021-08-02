@@ -86,16 +86,21 @@ Find where the supporting_files folder is, prioritising env var
 
 sub _build_supporting_files_path {
     
-    my $result = $ENV{'ATLAS_META_CONFIG'};
-    if(! defined $result){
-        $result =  _build_module_supporting_files_path();
+    my @dirs = ();
+ 
+    if(defined $ENV{'ATLAS_META_CONFIG'}){
+        foreach ( split /,/, $ENV{'ATLAS_META_CONFIG'} ){
+            if ( -d $_ ){
+                push @dirs, $_;
+            }
+            else {
+                die "ERROR - Cannot find config dir $_ .\n";
+            }
+        }
     }
+    push @dirs,  _build_module_supporting_files_path();
 
-    unless( -d $result ) {
-        die "ERROR - Cannot find $result -- cannot locate site config.\n";
-    }
-
-    return $result;
+    return \@dirs;;
 }
 
 =item get_supporting_file
@@ -106,18 +111,25 @@ Returns a path to a file in supporting_files directory
 
 sub get_supporting_file {
 	my ($file_name) =  @_;
-    my $supporting_files_dir = _build_supporting_files_path();
-    my $result = File::Spec->catfile(
-		$supporting_files_dir,
-		$file_name
-	);
-    if ( ! -r $result ){
-        my $module_supporting_file_dir = _build_module_supporting_files_path();
-        my $result_template = File::Spec->catfile(
-            $module_supporting_file_dir,
-            "${file_name}.default"
-        );
+    
+    my $dirs = _build_supporting_files_path();
 
+    # Search candidate config dirs in order
+
+    my $result;
+    foreach my $dir ( @$dirs ){
+        $result = File::Spec->catfile($dir, $file_name);
+        if ( -r $result ){
+            last;
+        }
+    }
+   
+    # If we still haven't found the config file, try initialising from a
+    # template named like the last file tried (which will be from the
+    # supporting files dir).
+ 
+    if ( ! -r $result ){
+        my $result_template = "${result}.default"   
         if ( -r $result_template ){
             warn "$result not present, initialising from $result_template";
             copy( ${result_template}, ${result});
