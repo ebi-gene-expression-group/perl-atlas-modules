@@ -279,9 +279,9 @@ sub get_plants_species {
     foreach my $line (<PLANTS>)  { 
         next if $line =~ m/#name/;
         my @plants_species = split(/\t/,$line);
-        push (@plants_species_list, $plants_species[1])
+        push (@plants_species_list, $plants_species[1]);
     }
-    close(PLANTS)
+    close(PLANTS);
     return \@plants_species_list;
 }
 
