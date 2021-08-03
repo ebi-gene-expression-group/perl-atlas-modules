@@ -296,7 +296,7 @@ sub get_ontology_for_type {
         #set organism to plants
         my $organism='plants';
     }
-    ## iterate over the lookup table to identify corresposning ontology db for zooma mappings
+    ## iterate over the lookup table to identify corresponding ontology db for zooma mappings
     foreach my $propertyType ( sort keys %{ $ontology_lookup } ) {
        if ( $propertyType =~ $property_type ){
            foreach my $species ( sort keys %{ $ontology_lookup->{$propertyType} } ) {
