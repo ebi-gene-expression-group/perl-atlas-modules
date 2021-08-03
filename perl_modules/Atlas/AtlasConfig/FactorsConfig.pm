@@ -33,6 +33,7 @@ use Log::Log4perl;
 use XML::Writer;
 use IO::File;
 use Atlas::Common qw( create_atlas_site_config );
+use Atlas::Util qw( get_supporting_file);
 use File::Spec;
 
 has 'default_query_factor_type' => (
@@ -239,10 +240,8 @@ sub _read_gxa_license {
     
     $logger->debug( "Reading GXA license..." );
 
-    my $atlasSiteConfig = create_atlas_site_config;
-
-    my $gxaLicenseFile = $atlasSiteConfig->get_gxa_license_file;
-
+    my $gxaLicenseFile = get_supporting_file("gxa_license.txt");
+    
     unless( $gxaLicenseFile ) {
         $logger->logdie(
             "gxa_license_file is not defined in site config. Cannot continue."

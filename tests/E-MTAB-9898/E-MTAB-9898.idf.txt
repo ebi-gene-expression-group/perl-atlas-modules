@@ -1,0 +1,70 @@
+MAGE-TAB Version	1.1
+Investigation Title	Whole-genome sequencing of polyamine over-producing yeast strains
+
+Experimental Design	growth condition design	genetic modification design
+Experimental Design Term Source REF	EFO	EFO
+Experimental Design Term Accession Number	EFO_0001759	EFO:0001758
+
+Experimental Factor Name	isolate
+Experimental Factor Type	isolate
+Experimental Factor Term Source REF
+Experimental Factor Term Accession Number
+
+Person Last Name	Qin	Ozdemir	Nielsen
+Person First Name	Jiufu	Emre	Jens
+Person Mid Initials
+Person Email	jiufuq@biosustain.dtu.dk	emoz@biosustain.dtu.dk	nielsenj@chalmers.se
+Person Phone
+Person Fax
+Person Affiliation	Novo Nordisk Foundation Center for Biosustainability, Technical University of Denmark,	Novo Nordisk Foundation Center for Biosustainability, Technical University of Denmark,	Novo Nordisk Foundation Center for Biosustainability, Technical University of Denmark,
+Person Address	Novo Nordisk Foundation Center for Biosustainability, Technical University of Denmark, DK2800 Kgs. Lyngby, Denmark	Novo Nordisk Foundation Center for Biosustainability, Technical University of Denmark, DK2800 Kgs. Lyngby, Denmark	Novo Nordisk Foundation Center for Biosustainability, Technical University of Denmark, DK2800 Kgs. Lyngby, Denmark
+Person Roles	data analyst;experiment performer;investigator	data analyst;submitter	investigator
+Person Roles Term Source REF
+Person Roles Term Accession Number
+
+Quality Control Type
+Quality Control Term Source REF
+Quality Control Term Accession Number
+
+Replicate Type
+Replicate Term Source REF
+Replicate Term Accession Number
+
+Normalization Type
+Normalization Term Source REF
+Normalization Term Accession Number
+
+Date of Experiment	2019-10-14
+Public Release Date	2021-03-31
+
+PubMed ID
+Publication DOI
+Publication Author List	Jiufu Qin, Anastasia Krivoruchko, Boyang Ji, Yu Chen, Mette Kristensen, Emre Özdemir, Jay D. Keasling, Michael Krogh Jensen, Jens Nielsen
+Publication Title	Engineering yeast metabolism for the discovery and production of polyamines and polyamine analogues
+Publication Status	submitted
+Publication Status Term Source REF
+Publication Status Term Accession Number
+
+Experiment Description	Dataset aims to uncover beneficial mutations on yeast strains (CEN.PK 113-11D based) engineered for polyamine over-production. We observed substantial heterogeneity between colony sizes and polyamine titers obtained between parent and final strains. Further physiological characterization of re-streaked colonies confirmed this phenotype, meaning that the sudden heterogeneity is heritable. Sequencing data presented here is used for identification differences between these mutated and parental strains.
+
+Protocol Name	P-MTAB-104362	P-MTAB-104365	P-MTAB-104364	P-MTAB-104363
+Protocol Type	sample collection protocol	nucleic acid sequencing protocol	nucleic acid library construction protocol	nucleic acid extraction protocol
+Protocol Term Source REF	EFO	EFO	EFO	EFO
+Protocol Term Accession Number	EFO_0005518	EFO_0004170	EFO_0004184	EFO_0002944
+Protocol Description	Clones of strains were cultivated overnight in 15 mL of Delft medium added with 40 mg/l uracil up to an OD600 around two.	Sequencing was performed with the NextSeq (High output kit) with 2 × 150 paired-end reads targeting a genome coverage of 100x per sample.	DNA libraries were prepared using a Kapa Hyper Prep Library Prep Kit (Roche Molecular Systems).	The Blood & Cell Culture DNA Mini Kit (Qiagen) was used to extract genomic DNA from the overnight yeast culture using the protocol recommended by the manufacturer.
+Protocol Parameters
+Protocol Hardware		NextSeq 500
+Protocol Software
+Protocol Contact
+
+Term Source Name	EFO	ArrayExpress
+Term Source File	http://www.ebi.ac.uk/efo/	http://www.ebi.ac.uk/arrayexpress/
+Term Source Version	2.81
+
+SDRF File	E-MTAB-9898.sdrf.txt
+Comment [TemplateType]	High-throughput sequencing
+Comment [Submitted Name]	Whole-genome sequencing of polyamine over-producing yeast strains
+Comment [SecondaryAccession]	ERP125702
+Comment [SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/ERR4973511-ERR4973558
+Comment [AEExperimentType]	DNA-seq
+Comment[ArrayExpressAccession]	E-MTAB-9898
