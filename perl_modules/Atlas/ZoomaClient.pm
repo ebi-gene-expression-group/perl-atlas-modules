@@ -111,7 +111,7 @@ has cutoff_proportion => (
 =cut
 
 my $logger = Log::Log4perl::get_logger;
-my $ontology_lookup = zooma_ontology_lookup ("zooma_ontologies.tsv");
+my $ontology_lookup = zooma_ontology_lookup();
 my $plant_species = get_plants_species();
 
 =head1 METHODS
@@ -257,7 +257,7 @@ sub _query_zooma {
 sub zooma_ontology_lookup {
     my ( $filename ) = @_;
     my $abs_path = dirname(File::Spec->rel2abs(__FILE__));
-    my $zoomaOntologyLookupFile = "$abs_path/../../supporting_files/". $filename;
+    my $zoomaOntologyLookupFile = get_supporting_file( 'zooma_ontologies.tsv' );    
     open (my $in_fh, '<', $zoomaOntologyLookupFile) or die $!;
     my %ontology_lookup;
     while ( my $line = <$in_fh> ) {
