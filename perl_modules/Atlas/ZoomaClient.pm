@@ -42,10 +42,13 @@ use URL::Encode qw( url_encode_utf8 );
 use JSON::Parse qw( parse_json );
 use Array::Compare;
 use Log::Log4perl;
-
-use Atlas::Common qw( make_http_request );
+use File::Basename;
+use Atlas::Common qw( 
+    make_http_request
+    get_supporting_file
+ );
 use Atlas::ZoomaClient::MappingResult;
-
+use HTTP::Request;
 
 =head1 ATTRIBUTES
 
@@ -108,6 +111,8 @@ has cutoff_proportion => (
 =cut
 
 my $logger = Log::Log4perl::get_logger;
+my $ontology_lookup = zooma_ontology_lookup();
+my $plant_species = get_plants_species();
 
 =head1 METHODS
 
@@ -122,20 +127,20 @@ more ontology URIs.
 
 sub map_term {
 
-    my ( $self, $propertyType, $propertyValue ) = @_;
+    my ( $self, $propertyType, $propertyValue, $organism ) = @_;
 
     # Step 1: Get the results from Zooma, an array ref of hash refs
     # representing the JSON from the Zooma API.
-    $logger->debug( "Querying zooma for $propertyType : $propertyValue ..." );
+    $logger->debug( "Querying zooma for $propertyType : $propertyValue : $organism ..." );
 
-    my $queryResults = $self->_query_zooma( $propertyType, $propertyValue );
+    my $queryResults = $self->_query_zooma( $propertyType, $propertyValue, $organism );
     
     unless( $queryResults ) {
 
         $logger->warn( "No results found for $propertyType : $propertyValue" );
 
         my $mappingResult = Atlas::ZoomaClient::MappingResult->new(
-            zooma_error => "No results found for $propertyType : $propertyValue"
+            zooma_error => "No results found for $propertyType : $propertyValue : $organism"
         );
 
         return $mappingResult;
@@ -150,7 +155,7 @@ sub map_term {
     # If there are any results, create the mapping result.
     if( @{ $queryResults } ) {
 
-        $logger->debug( "Getting mapping result for $propertyType : $propertyValue ..." );
+        $logger->debug( "Getting mapping result for $propertyType : $propertyValue : $organism ..." );
 
         my $mappingResult = Atlas::ZoomaClient::MappingResult->new(
             zooma_results => $queryResults,
@@ -191,22 +196,27 @@ Given a property type and value, return a hash containing the query results.
 
 sub _query_zooma {
 
-    my ( $self, $propertyType, $propertyValue ) = @_;
+    my ( $self, $propertyType, $propertyValue, $organism ) = @_;
     
     my ( $propertyType4url, $propertyValue4url ) = ( $propertyType, $propertyValue );
 
     # First we need to make sure the property type and value are in the right
     # format for a URL.
     $_ = url_encode_utf8( $_ ) for ( $propertyType4url, $propertyValue4url );
+
+    my $ontology = lc ( get_ontology_for_type( $organism, $propertyType ) );
+    $ontology =~ s/\s+$//;
     
     # Get the data sources string.
     my $dataSourcesString = $self->_data_sources_to_string;
     my $ontologiesString = $self->_ontologies_to_string;
 
+    $logger->info("Mapping property type '", $propertyType, "' for species '", $organism, "' with ontology db - ", $ontology);
+
     # Build the query URL.
     my $queryURL = $self->get_zooma_api_base
                     . "services/annotate?propertyValue=$propertyValue4url&propertyType=$propertyType4url"
-                    . "&filter=required:[$dataSourcesString],preferred:[$dataSourcesString],ontologies:[$ontologiesString]";
+                    . "&filter=required:[$dataSourcesString],preferred:[$dataSourcesString],ontologies:[$ontology]";
 
     my $zoomaJSON = make_http_request( $queryURL, "json" );
 
@@ -243,6 +253,71 @@ sub _query_zooma {
     return $zoomaResults;
 }
 
+
+sub zooma_ontology_lookup {
+    my ( $filename ) = @_;
+    my $abs_path = dirname(File::Spec->rel2abs(__FILE__));
+    my $zoomaOntologyLookupFile = get_supporting_file( 'zooma_ontologies.tsv' );    
+    open (my $in_fh, '<', $zoomaOntologyLookupFile) or die $!;
+    my %ontology_lookup;
+    while ( my $line = <$in_fh> ) {
+        my ( $property_type, $organism, $ontologies ) = split /\t/, $line;
+        $ontology_lookup{$property_type}{$organism} = $ontologies;
+    }   
+    return \%ontology_lookup;
+}
+
+sub get_plants_species {
+
+    # Plants file comes from
+    # http://ftp.ebi.ac.uk/ensemblgenomes/pub/release-51/plants/species_EnsemblPlants.txt,
+    # but the Ensembl FTP is a bit unreliable, so we bundle it here. 
+    
+    my $plants_file=get_supporting_file( 'species_EnsemblPlants.txt' );    
+    open(PLANTS, $plants_file) or die("Could not open file $plants_file.");
+    my @plants_species_list;
+    foreach my $line (<PLANTS>)  { 
+        next if $line =~ m/#name/;
+        my @plants_species = split(/\t/,$line);
+        push (@plants_species_list, $plants_species[1]);
+    }
+    close(PLANTS);
+    return \@plants_species_list;
+}
+
+
+sub get_ontology_for_type {
+    my ( $organism, $property_type ) = @_;
+
+    my $ontology;
+    ## for plants specific
+    if (grep { $_ =~ $organism } @{ $plant_species }) {
+        print ("plant species - $organism \n");
+        #set organism to plants
+        my $organism='plants';
+    }
+    ## iterate over the lookup table to identify corresponding ontology db for zooma mappings
+    foreach my $propertyType ( sort keys %{ $ontology_lookup } ) {
+       if ( $propertyType =~ $property_type ){
+           foreach my $species ( sort keys %{ $ontology_lookup->{$propertyType} } ) {
+               if ( $species =~ $organism ){
+                    $ontology = $ontology_lookup->{$propertyType}->{$species};
+                }
+                elsif ( $species =~ 'any' ){
+                    $ontology = $ontology_lookup->{$propertyType}->{'any'};
+                }
+                elsif ( $species =~ 'other'){
+                     $ontology = $ontology_lookup->{$propertyType}->{'other'};
+                }
+           }
+                return $ontology;
+        }
+        else {
+            $ontology='EFO';
+        }
+     }
+     return $ontology;
+}
 
 =item _data_sources_to_string
 

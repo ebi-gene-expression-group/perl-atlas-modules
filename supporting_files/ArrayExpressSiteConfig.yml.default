@@ -2,33 +2,33 @@
 # This file contains definitions for variables used throughout ArrayExpress and
 # Expression Atlas production code.
 
-MX_DSN:                   DBI:mysql:prod_miamexpress:mysql-prod-miamexpress.ebi.ac.uk:4054
+MX_DSN:                   xxxx
 MX_USERNAME:              xxxx
 MX_PASSWORD:              xxxx
 
-AE2_INSTANCE_NAME:        AE2PRD
-AE2_DSN:                  DBI:Oracle:host=ora-vm5-022.ebi.ac.uk;sid=AE2PRO;port=1531
+AE2_INSTANCE_NAME:        xxxx
+AE2_DSN:                  xxxx
 AE2_USERNAME:             xxxx
 AE2_PASSWORD:             xxxx
 
-AEDW_DSN:                 DBI:Oracle:host=ora-vm-064.ebi.ac.uk;sid=ATLASPRO;port=1531
+AEDW_DSN:                 xxxx
 AEDW_USERNAME:            xxxx
 AEDW_PASSWORD:            xxxx
 
-AE_PG_DSN:                dbi:Pg:dbname=gxpatlaspro;host=pgsql-hxvm-002.ebi.ac.uk;port=5432
+AE_PG_DSN:                xxx                
 AE_PG_USERNAME:           xxxx
 AE_PG_PASSWORD:           xxxx
 
 # Submissions Tracking MySQL back-end
-AUTOSUBS_DSN:       DBI:mysql:ae_autosubs:mysql-ae-autosubs-prod.ebi.ac.uk:4091
+AUTOSUBS_DSN:       xxxx
 AUTOSUBS_USERNAME:  xxxx
 AUTOSUBS_PASSWORD:  xxxx
 
-AUTOSUBMISSIONS_FILEBASE: /nfs/ma/ma-exp/AutoSubmissions/
-AUTOSUBMISSIONS_TARGET:   /nfs/ma/home/arrayexpress/ae2_production/data/EXPERIMENT
-GEO_SUBMISSIONS_TARGET:   /nfs/production3/ma/home/atlas3-production/GEO_import
-ENA_SUBMISSIONS_TARGET:   /nfs/production3/ma/home/atlas3-production/ENA_import
-AUTOSUBMISSIONS_ARRAY_TARGET: /nfs/production3/ma/home/atlas3-production/GEO_import/microarray/ARRAY
+AUTOSUBMISSIONS_FILEBASE: 
+AUTOSUBMISSIONS_TARGET:   
+EO_SUBMISSIONS_TARGET:   
+ENA_SUBMISSIONS_TARGET:   
+AUTOSUBMISSIONS_ARRAY_TARGET:
 
 AUTOSUBS_ADMIN:           fg_cur@ebi.ac.uk
 AUTOSUBS_ADMIN_USERNAME:  xxxx
@@ -41,7 +41,7 @@ AUTOSUBS_ADMIN_USERNAME:  xxxx
 
 AUTOSUBS_CURATOR_EMAIL:   fgsubs@ebi.ac.uk
 
-HTTP_PROXY:               'http://www-proxy.ebi.ac.uk:3128'
+HTTP_PROXY:               
 
 AE_ARRAYDESIGN_LIST:      'http://peach.ebi.ac.uk:8480/api/all-arrays.txt'
 
@@ -49,40 +49,38 @@ MAX_LWP_DOWNLOAD: 10104857600
 
 ENA_FTP_URI:              ftp://ftp.sra.ebi.ac.uk/vol1/fastq/
 
-AE2_LOAD_DIR:             /nfs/ma/home/arrayexpress/ae2_production/data
+AE2_LOAD_DIR:             
 
 BIOPORTAL_API_KEY:       xxxx
-ONTO_TERMS_LIST:         /nfs/production3/ma/home/atlas3-production/sw/configs/onto_terms.yml
+ONTO_TERMS_LIST:         
 
 
 # file used to process GEO experiments.
-#GEO_IMPORT_COMMAND:        'PERL5LIB=/nfs/ma/home/fgpt/sw/lib/perl/CentOS_prod/lib64/perl5/site_perl:/nfs/ma/home/fgpt/sw/lib/perl/CentOS_prod/lib:/nfs/ma/home/fgpt/sw/lib/perl/FGPT_CentOS_prod/lib /usr/bin/perl /nfs/ma/home/fgpt/sw/lib/perl/FGPT_CentOS_prod/new_soft2magetab.pl'
 
-GEO_IMPORT_COMMAND:        '/nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/geo_import/new_soft2magetab.pl'
+GEO_IMPORT_COMMAND:        'new_soft2magetab.pl'
 
-GEO_STAGING_DIR:          /nfs/production3/ma/home/atlas3-production/GEO_import/GEOImportDownload/
+GEO_STAGING_DIR:          GEOImportDownload/
 
-GSE_GDS_MAP:             /nfs/production3/ma/home/atlas3-production/GEO_import/geo_import_supporting_files/gse2gds.txt
-GEO_PLATFORM_MAP:        /nfs/production3/ma/home/atlas3-production/GEO_import/geo_import_supporting_files/platforms.txt
+GSE_GDS_MAP:             geo_import_supporting_files/gse2gds.txt
+GEO_PLATFORM_MAP:        geo_import_supporting_files/platforms.txt
 
 # New: location of EFO and ontology mapping script for use in GEO import
 EFO_LOCATION:              http://www.ebi.ac.uk/efo/efo.owl
-EFO_OWL_FILE:             /nfs/production3/ma/home/atlas3-production/GEO_import/geo_import_supporting_files/efo.owl
-#OE_MAPPING_SCRIPT:        /nfs/ma/ma-subs/AE/subs/PERL_SCRIPTS/local/bin/add_ontology_refs_to_magetab.pl
+EFO_OWL_FILE:             geo_import_supporting_files/efo.owl
 
-ENA_ACC_MAP:              /nfs/production3/ma/home/atlas3-production/GEO_import/geo_import_supporting_files/fastqFileReport
+ENA_ACC_MAP:              geo_import_supporting_files/fastqFileReport
 
 VALIDATION_SCRIPT:        
 
 
 # Location of ADF and Experiments checked in Atlas.pm
-ADF_CHECKED_LIST:        /nfs/production3/ma/home/atlas3-production/sw/configs/adfs_not_in_atlas.txt
-ATLAS_EXPT_CHECKED_LIST: /nfs/production3/ma/home/atlas3-production/sw/configs/expts_checked_for_atlas.txt
+ADF_CHECKED_LIST:        configs/adfs_not_in_atlas.txt
+ATLAS_EXPT_CHECKED_LIST: configs/expts_checked_for_atlas.txt
 SKIP_CHECKED_LIST_FILES:  true
 
 PRIVATE_ADF_USERNAME:    xxxx
 PRIVATE_ADF_PASSWORD:    xxxxx
 PRIVATE_ADF_URI_BASE:    http://www.ebi.ac.uk/arrayexpress/files/
 
-ADF_DB_PATTERN_FILE:     /nfs/production3/ma/home/atlas3-production/sw/configs/adf_db_patterns.txt
+ADF_DB_PATTERN_FILE:     configs/adf_db_patterns.txt
 
