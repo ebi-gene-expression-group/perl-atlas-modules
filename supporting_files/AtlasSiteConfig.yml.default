@@ -5,7 +5,7 @@
 atlasinstall:   prod
 
 # annotare import
-arrayexpress_experiment_load_dir: /ebi/microarray/home/arrayexpress/ae2_production/data/EXPERIMENT
+arrayexpress_experiment_load_dir: 
 
 # geo import 
 geo_experiment_load_dir: /GEO_import
@@ -22,7 +22,7 @@ ena_sc_experiment_load_dir: /singlecell/experiment
 
 #File containing factor values to use as references in differential
 # experiments and factor types to ignore.
-references_ignore_file:     sw/atlasinstall_prod/atlasprod/analysis/differential/mapped_reference_assay_group_factor_values.xml
+references_ignore_file:     mapped_reference_assay_group_factor_values.xml
 
 # Allowed experiment types in XML configuration file.
 allowed_xml_experiment_types: 
@@ -58,7 +58,7 @@ mirna_array_design_accessions:
 mirbase_mappings_write_directory: arraydesigns/microRNA
 
 # URL base for ArrayExpress files.
-array_designs_ftp_site: /net/nasP/ftp_public/databases/microarray/data/array
+array_designs_ftp_site: 
 
 # File mapping abbreviations used for species in miRBase.
 mirbase_species_abbreviations: bioentity_properties/mirbase/idprefix_to_organism.tsv
@@ -67,28 +67,25 @@ mirbase_species_abbreviations: bioentity_properties/mirbase/idprefix_to_organism
 contrast_details_url: http://wwwdev.ebi.ac.uk/gxa/api/contrastdetails.tsv
 
 # File containing mappings of property types to EFO URIs.
-property_types_efo_mappings: sw/atlasinstall_prod/atlasprod/db/scripts/property_types_efo_mappings.tsv
+property_types_efo_mappings: property_types_efo_mappings.tsv
 
 # Directory where Ensembl annotation source files live.
-annotation_source_dir: sw/atlasinstall_prod/atlasprod/bioentity_annotations/ensembl/annsrcs
+annotation_source_dir: annsrcs
 
 # Genome references config.
-genome_references_config: sw/islinstall_prod/isl_genomes/genome_references.conf
+genome_references_config: genome_references.conf
 
 # R installation.
-atlas_r_installation: sw/atlasinstall_prod/R_install
+atlas_r_installation: R_install
 
 # Script for querying CTTV EFO terms.
-cttv_efo_sparql_script: sw/atlasinstall_prod/atlasprod/db/scripts/get_efo_in_cttv_validation_data.sh
-
-# File containing property types and values to exclude from Zooma mapping.
-zooma_exclusions_file: <CONDA_PREFIX>/atlasprod/supporting_files/zooma_exclusions.yml
+cttv_efo_sparql_script: get_efo_in_cttv_validation_data.sh
 
 # File containing accessions of experiments that have been assessed by a curator.
-atlas_curated_accessions_file: sw/configs/atlas_curated_accessions.yml
+atlas_curated_accessions_file: atlas_curated_accessions.yml
 
 # File containing accessions of experiments that don't have R experiment summaries.
-no_r_data_accessions_file: sw/configs/no_r_object
+no_r_data_accessions_file: no_r_object
 
 # URL to get ADF info from ArrayExpress.
 arrayexpress_adf_info_url: http://peach.ebi.ac.uk:8480/api/array.txt?acc=
@@ -188,13 +185,11 @@ atlas_supported_adfs:
     A-GEOD-11534: Rattus norvegicus
     A-MEXP-1414: Oryza sativa
 
-failed_qc_dir: /nfs/production3/ma/home/atlas3-production/failedQC
+failed_qc_dir: failedQC
 
-min_pval_dir: /nfs/production3/ma/home/atlas3-production/minPValGt0.5
+min_pval_dir: atlas3-production/minPValGt0.5
 
-failed_curation_dir: /nfs/production3/ma/home/atlas3-production/failedCuration
-
-non_standard_experiments_file: <CONDA_PREFIX>/atlasprod/supporting_files/non_standard_experiments.yml
+failed_curation_dir: failedCuration
 
 atlasprd3_dsn:    DBI:Oracle:host=ora-vm-xxx.ebi.ac.uk;sid=ATLASPRO;port=1531
 atlasprd3_user:    xxxx
