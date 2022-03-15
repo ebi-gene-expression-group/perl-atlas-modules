@@ -92,7 +92,7 @@ setup() {
 
 @test "[atlas-experiment-metadata] Run condense_sdrf.pl" {
 
-  run condense_sdrf.pl -z -x $PWD/config/zooma_exclusions.yml -e E-MTAB-9898 -fi $PWD/tests/E-MTAB-9898/E-MTAB-9898.idf.txt -o $PWD
+  run condense_sdrf.pl -z -x $PWD/tests/zooma_exclusions_for_testing.yml -e E-MTAB-9898 -fi $PWD/tests/E-MTAB-9898/E-MTAB-9898.idf.txt -o $PWD
   echo "output = ${output}"
   [ "$status" -eq 0 ]
 }

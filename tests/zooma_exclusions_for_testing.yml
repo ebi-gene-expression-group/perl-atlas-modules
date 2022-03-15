@@ -1,0 +1,59 @@
+---
+# This file contains property types, values, and type-value pairs to be
+# excluded from being mapped with Zooma.
+
+# Property types (exclude all values with this property type).
+types_to_exclude:
+    - age
+    - age at diagnosis
+    - individual
+    - exercise
+    - physical activity
+    - replicate
+    - genotype
+    - clinical history
+    - clinical information
+    - biosource provider
+    - dose
+    - block
+    - body weight
+    - last follow up
+    - mass
+    - mitotic rate
+    - passage
+    - RNA interference
+    - sampling time point
+    - time
+    - tumor mass
+    - tumor size
+    - body mass index
+    - temperature
+    - gestational age
+    - survival time
+    - technical replicate
+    - initial time point
+    - sample lot number
+    - single cell identifier
+    - single cell quality
+    - submitted single cell quality
+
+# Property values (always exclude this value regardless of property type).
+values_to_exclude:
+    - unknown
+    - not available
+    - not specified
+    - positive
+    - negative
+    - unrelated
+    - unclassified
+
+# Property type-value pairs.
+type_value_pairs_to_exclude:
+    growth condition:
+        - cold
+    phenotype:
+        - resistant
+    phenotype:
+        - susceptible
+    phenotype:
+        - tolerant
