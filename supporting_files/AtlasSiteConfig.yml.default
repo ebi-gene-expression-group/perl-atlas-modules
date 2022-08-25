@@ -32,6 +32,7 @@ allowed_xml_experiment_types:
     - rnaseq_mrna_differential
     - rnaseq_mrna_baseline
     - proteomics_baseline
+    - proteomics_baseline_dia
     - proteomics_differential
 
 # Allowed data usage agreements for factors XML configuration file.
