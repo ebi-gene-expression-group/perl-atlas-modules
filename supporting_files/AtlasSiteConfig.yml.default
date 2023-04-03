@@ -87,10 +87,10 @@ atlas_curated_accessions_file: atlas_curated_accessions.yml
 # File containing accessions of experiments that don't have R experiment summaries.
 no_r_data_accessions_file: no_r_object
 
-# URL to get ADF info from ArrayExpress.
+# URL to get ADF info from ArrayExpress.  Replace URL because PEACH has been deprecated.
 arrayexpress_adf_info_url: http://peach.ebi.ac.uk:8480/api/array.txt?acc=
 
-# URL to get privacy info from ArrayExpress
+# URL to get privacy info from ArrayExpress.  Replace URL because PEACH has been deprecated.
 arrayexpress_privacy_info_url: http://peach.ebi.ac.uk:8480/api/privacy.txt?acc=
 
 # Script for getting iRAP single-lib results.
