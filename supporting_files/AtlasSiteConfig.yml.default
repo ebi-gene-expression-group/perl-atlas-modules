@@ -88,7 +88,7 @@ atlas_curated_accessions_file: atlas_curated_accessions.yml
 no_r_data_accessions_file: no_r_object
 
 # URL to get ADF info from ArrayExpress.  Replace URL because PEACH has been deprecated.
-arrayexpress_adf_info_url: http://peach.ebi.ac.uk:8480/api/array.txt?acc=
+arrayexpress_adf_info_url: http://codon-plantain-01:8480/arrays?acc=
 
 # URL to get privacy info from ArrayExpress.
 arrayexpress_privacy_info_url: https://www.ebi.ac.uk/biostudies/api/v1/search?type=study&accession=
