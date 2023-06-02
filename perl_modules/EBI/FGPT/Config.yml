@@ -14,7 +14,7 @@ AE_DSN: ''
 AE_PASSWORD: ''
 AE_USERNAME: ''
 
-# ArrayExpress database connection settings.
+# ArrayExpress PG database connection settings.
 AE_PG_DSN: ''
 AE_PG_PASSWORD: ''
 AE_PG_USERNAME: ''
